@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"components\\\\Home\\\\Home.js -> venobox/dist/venobox.min.js":{"id":6867,"files":["static/chunks/6867.904d11165e161e72.js"]},"components\\\\VedioGenerator\\\\VedioGenerator.js -> venobox/dist/venobox.min.js":{"id":6867,"files":["static/chunks/6867.904d11165e161e72.js"]}}';

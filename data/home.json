@@ -1,0 +1,195 @@
+{
+  "service": [
+    {
+      "title": "Maintain Original Formatting",
+      "desc": "Preserve headings, bullet points, links, and more.",
+      "icon": "activity",
+      "delay": 100
+    },
+    {
+      "title": "Perfect Grammar",
+      "desc": "Ensure your content reads naturally and professionally.",
+      "icon": "cast",
+      "delay": 100
+    },
+    {
+      "title": "Beat AI Detectors",
+      "desc": "Bypass detection from leading tools like ZeroGPT.",
+      "icon": "map",
+      "delay": 200
+    },
+    {
+      "title": "Multilingual Support",
+      "desc": "Humanize your content in 10+ different languages.",
+      "icon": "loader",
+      "delay": 100
+    },
+    {
+      "title": "Bulk Conversion",
+      "desc": "Transform entire blogs or multiple articles at once.",
+      "icon": "speaker",
+      "delay": 100
+    },
+    {
+      "title": "WordPress Plugin",
+      "desc": "Seamlessly integrate with WordPress for instant conversions.",
+      "icon": "terminal",
+      "delay": 200
+    }
+  ],
+  "timeline": [
+    {
+      "title": "1.Select template",
+      "desc": "Easily Select Templates for Website Content."
+    },
+    {
+      "title": "2.Describe topic",
+      "desc": "All Feature available features in Essentials."
+    },
+    {
+      "title": "3.Generate content",
+      "desc": "Popular Feature available features in Essentials."
+    }
+  ],
+  "pricing": [
+    {
+      "title": "Basic",
+      "price": 0,
+      "text": "",
+      "subTitle": "Forever",
+      "isActive": false,
+      "subItem": [
+        {
+          "text": "21,000 Words per Month",
+          "isMinus": false
+        },
+        {
+          "text": "Maintain Formatting",
+          "isMinus": false
+        },
+        {
+          "text": "Upto 300 Word per article",
+          "isMinus": false
+        },
+        {
+          "text": "Beat ZeroGPT Detector",
+          "isMinus": false
+        },
+        {
+          "text": "10+ Languages",
+          "isMinus": false
+        },
+        {
+          "text": "Email Support",
+          "isMinus": false
+        }
+      ]
+    },
+    {
+      "title": "Business",
+      "price": 10,
+      "text": "",
+      "subTitle": "USD Per Month",
+      "isActive": true,
+      "subItem": [
+        {
+          "text": "50,000 Words per Month",
+          "isMinus": false
+        },
+        {
+          "text": "All Basic Features",
+          "isMinus": false
+        },
+        {
+          "text": "Upto 1500 Word per article",
+          "isMinus": false
+        },
+        {
+          "text": "Access to Lightning mode",
+          "isMinus": false
+        },
+        {
+          "text": "Priority Support",
+          "isMinus": false
+        }
+      ]
+    },
+    {
+      "title": "Advanced",
+      "price": 34,
+      "text": "",
+      "subTitle": "USD Per Month",
+      "isActive": false,
+      "subItem": [
+        {
+          "text": "200,000 Words Per Month",
+          "isMinus": false
+        },
+        {
+          "text": "All Business Features",
+          "isMinus": false
+        },
+        {
+          "text": "Access to Undetectable Content Generator",
+          "isMinus": false
+        },
+        {
+          "text": "Dedicated Support",
+          "isMinus": false
+        }
+      ]
+    },
+    {
+      "title": "Enterprise",
+      "price": 75,
+      "text": "",
+      "subTitle": "USD Per Month",
+      "isActive": false,
+      "subItem": [
+        {
+          "text": "500,000 Words Per Month",
+          "isMinus": false
+        },
+        {
+          "text": "All Advanced Features",
+          "isMinus": false
+        },
+        {
+          "text": "Access to API",
+          "isMinus": false
+        },
+        {
+          "text": "Dedicated Support",
+          "isMinus": false
+        }
+      ]
+    }
+  ],
+  "accordion": [
+    {
+      "title": "What is OneClickHuman and how does it work?",
+      "desc": "OneClickHuman is a tool that transforms AI-generated content into human-like writing while maintaining grammar and formatting. It also beats top AI detectors like ZeroGPT.",
+      "isExpand": true
+    },
+    {
+      "title": "Can I use OneClickHuman for multiple languages?",
+      "desc": "Yes, OneClickHuman supports content humanization in over 10 languages.",
+      "isExpand": false
+    },
+    {
+      "title": "Does OneClickHuman maintain the original formatting of my content?",
+      "desc": "Absolutely! We preserve all your content's original formatting, including headings, bullet points, and links.",
+      "isExpand": false
+    },
+    {
+      "title": "How do I get customer support?",
+      "desc": "You can reach our support team via email or live chat. Business and Advanced plan users receive priority support.",
+      "isExpand": false
+    },
+    {
+      "title": "Is my data safe with OneClickHuman?",
+      "desc": "Yes, we prioritize your data security and privacy. All your content is encrypted and never shared.",
+      "isExpand": false
+    }
+  ]
+}
