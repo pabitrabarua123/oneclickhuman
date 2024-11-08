@@ -35,7 +35,7 @@ const LeftpanelDashboard = () => {
                     <li>
                       <Link
                         className={isActive("/plans-billing") ? "active" : ""}
-                        href="/plans-billing"
+                        href="/pricing"
                       >
                         <i className="feather-briefcase"></i>
                         <span>Manage Subsription</span>
@@ -48,7 +48,7 @@ const LeftpanelDashboard = () => {
                       HeaderData.leftPanel.map((data, index) => (
                         <li key={index}>
                           <Link
-                            href={data.link}
+                            href="/humanizer"
                             className={
                               isActive(data.link)
                                 ? "active"
@@ -64,7 +64,7 @@ const LeftpanelDashboard = () => {
                               src={isLightTheme ? data.img : data.imgLight}
                               width={35}
                               height={35}
-                              alt="AI Generator"
+                              alt="Oneclickhuman"
                             />
                             <span>{data.title} <br/><small>Undetectable Content Generator</small></span>
                           </Link>
