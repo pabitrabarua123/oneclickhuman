@@ -4,6 +4,7 @@
 import React, { useEffect } from "react";
 import sal from "sal.js";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
   useEffect(() => {
@@ -23,6 +24,7 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
   }, []);
 
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -67,7 +69,7 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
                { monthlyPlan !== data.credits && 
                  <div style={{textAlign: 'center'}}>
                   <form action="https://oneclickhuman.com/api_request/create-checkout-session" method="POST">
-                    <input type="hidden" name="email_address" value="pabitravirtualnode123@gmail.com" />
+                    <input type="hidden" name="email_address" value={session? session.user.user_email : ''} />
                     <input type="hidden" name="subscription" value={data.price_id} />
                     <input type="hidden" name="promocode" value="PAB50BA" />
                     { monthlyPlan === null &&
