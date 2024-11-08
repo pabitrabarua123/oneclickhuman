@@ -4,10 +4,121 @@ import React, { useState, useEffect } from "react";
 import SlateEditor from "./SlateEditor";
 import DOMPurify from 'dompurify';
 import { Language } from "./Language";
+import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation";
+import { Filter } from 'bad-words';
+import Timer from "./Timer";
 
 export const Tool = ({userData}) => {
 
   const [has_subscription, setHaveSubscription] = useState(false);
+  const [monthly_credits_exhausted, setMonthlyCreditsExhausted] = useState(false);
+  const [lifetime_exhausted, setLifeTimeExhausted] = useState(false);
+  const [monthly_onetime_credits_exhausted, setMonthlyOneTimeCreditsExhausted] = useState(false);
+  const [showupdatebtn, setShowupdatebtn] = useState(false);
+  const [CountWarning, setCountWarning] = useState(false);
+  const [quota, setQuota] = useState({number: 0, plan: 0, text: '', tooltip: ''});
+  const [discount, setDiscount] = useState('');
+  // quota to decresed -> 1 = free, 2 = monthly, 3 = onetime, 4 = lifetime
+  const [quota_to_decresed, setQuotaToDecresed] = useState(1);
+  const router = useRouter();
+
+  const [timerPopup, showTimerPopup] = useState({status: false, current_date: null});
+
+  const confetti = require('canvas-confetti');
+
+  useEffect(() => {
+    if(userData.user_id !== null){
+      if(userData.subscrption_status === 1 && userData.onetime_plan > 0){
+        setHaveSubscription(true);
+        //setPlan({...plan, monthly: false, onetime: true});
+        //console.log('both');
+        if(userData.credits_availbe > 1000 && userData.onetime_credit > 0){
+             setQuota({...quota, number: userData.credits_availbe, plan: json.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
+             setQuotaToDecresed(2);
+        }else if(userData.credits_availbe > 1000){
+          setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
+          setLifeTimeExhausted(true);
+          setQuotaToDecresed(2);
+        }else if(userData.onetime_credit > 0){
+           setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});
+           setMonthlyCreditsExhausted(true);
+           setQuotaToDecresed(3);
+        }else{
+           setMonthlyOneTimeCreditsExhausted(true); 
+           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
+                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Word Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                setQuotaToDecresed(4);
+           }else{
+              if(userData.quota > 0){
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
+                setQuotaToDecresed(1);
+              }else{
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
+                setShowupdatebtn(true);
+              }
+           }
+      } 
+   }else if(userData.subscrption_status === 1){
+       setHaveSubscription(true);
+      // setPlan({...plan, monthly: false, onetime: true});
+      if(userData.credits_availbe > 0){
+          setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
+          setQuotaToDecresed(2);
+        }else{
+           setMonthlyCreditsExhausted(true); 
+           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
+                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                setQuotaToDecresed(4);
+           }else{
+              if(userData.quota > 0){
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
+                setQuotaToDecresed(1);
+              }else{
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
+                setShowupdatebtn(true);
+              }
+           }
+        }
+   }else if(userData.onetime_plan > 0){
+       if(userData.onetime_credit > 0){
+            setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});    
+            setQuotaToDecresed(3);
+        }else{
+           setLifeTimeExhausted(true);
+           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
+                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                setQuotaToDecresed(4);
+           }else{
+              if(userData.quota > 0){
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
+                setQuotaToDecresed(1);
+              }else{
+                setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
+                setShowupdatebtn(true);
+              }
+           }
+        }
+   }else{
+      setDiscount('open');
+      if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
+                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                setQuotaToDecresed(4);
+      }else{
+         if(userData.quota > 0){
+          //console.log('hit here');
+              setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
+              setQuotaToDecresed(1);
+          }else{
+             //console.log('hit here first time');
+             setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
+             setShowupdatebtn(true);
+          }
+      }
+   }
+    }
+  }, [userData])
+
   const inputCallback = (val) => {
     setTextInput(val);
   }
@@ -27,6 +138,10 @@ export const Tool = ({userData}) => {
      setWordCount(countWord);
    }
    const [placeholder, setPlaceHolder] = useState(true);
+   const [TosChecked, setTosChecked] = useState(true);
+   const handleTosChange = event => {
+      setTosChecked(event.target.checked);
+   };
 
   // Start of modes module
   const [showmodes, setShowModes] = useState(false);
@@ -90,11 +205,431 @@ export const Tool = ({userData}) => {
    const free_word_limit = 300;
    const [TextBottomRight, setTextBottomRight] = useState(false);
 
-   const paraphrase2 = () => {
-     alert('Coming soon...')
-   }
+   function paraphrase2() {
+
+    //setUnderConstruction(true);
+    //return;
+  
+      //setRequest(2);
+      //return;
+  
+    let outputRes = '';
+    let quota_used = 0;
+    setTextBottomRight(false);
+    
+    if(request === 1){
+         return;
+    }
+    if(textInput === ''){
+       alert("Please enter text");
+       return;
+    }
+    if(words < 30){
+       alert("Please enter more than 30 words");
+       return;
+    } 
+    if(quota.plan === 700){
+        if(words > free_word_limit){
+           alert('Words limit is exceeded!');
+           return;
+        }
+    }else{
+       if(words > 1500){
+           alert('Words limit is exceeded!');
+           return;
+       }
+    }
+   /* if(words > quota.number){
+      alert('The number of words you entered is more than your balance');
+      return;
+    } */
+    if(TosChecked === false){
+        alert('Please accept the terms of service.');
+        return;
+    }
+  
+    let frequency = 0;
+    let presence = 0;
+    let top_p = 0;
+    let temp = 0;
+    let filterText = '';
+    //let model = 'gpt-4-turbo';
+  
+    switch(mode.text){
+      /*case 'Quality Mode':
+      filterText = DOMPurify.sanitize(textInput, {ALLOWED_TAGS: ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'u', 'i', 'li', 'ol', 'br', 'a', 'ul', 'p'], FORBID_ATTR: ['style', 'dir', 'id', 'class', 'data-slate-node']});
+      filterText = filterText.replace(/&nbsp;/g, "");
+      filterText = filterText.replace(/<p>\s*?<\/p>/g, ''); 
+      break; */
+  
+      case 'Premium Mode':
+      filterText = DOMPurify.sanitize(textInput, {ALLOWED_TAGS: ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'u', 'i', 'li', 'ol', 'br', 'a', 'ul', 'p'], FORBID_ATTR: ['style', 'dir', 'id', 'class', 'data-slate-node']});
+      filterText = filterText.replace(/&nbsp;/g, "");
+      filterText = filterText.replace(/<p>\s*?<\/p>/g, '');
+      break;
+  
+      case 'Lightning Mode':
+      filterText = DOMPurify.sanitize(textInput, {ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'u', 'i', 'br', 'a', 'p', 'b'], FORBID_ATTR: ['style', 'dir', 'id', 'class', 'data-slate-node']});
+      filterText = filterText.replace(/&nbsp;/g, "");
+      filterText = filterText.replace(/<h1>/g, "<p>");
+      filterText = filterText.replace(/<\/h1>/g, "</p>");
+      filterText = filterText.replace(/<h2>/g, "<p>");
+      filterText = filterText.replace(/<\/h2>/g, "</p>");
+      filterText = filterText.replace(/<h3>/g, "<p>");
+      filterText = filterText.replace(/<\/h3>/g, "</p>");
+      filterText = filterText.replace(/<h4>/g, "<p>");
+      filterText = filterText.replace(/<\/h4>/g, "</p>");
+      filterText = filterText.replace(/<h5>/g, "<p>");
+      filterText = filterText.replace(/<\/h5>/g, "</p>");
+      filterText = filterText.replace(/<h6>/g, "<p>");
+      filterText = filterText.replace(/<\/h6>/g, "</p>");
+      filterText = filterText.replace(/<p>\s*?<\/p>/g, '');
+      break;
+    }
+    //return;
+  
+  fetch('https://oneclickhuman.com/api_request/checkquota', {
+         mode:'cors', 
+         method: 'POST',
+           body: JSON.stringify({
+           'user_id' : userData.user_id,
+         }),
+         headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+         }
+       }).then(res => res.json())
+         .then((json) => {
+  
+            if(json.quota > 0 || json.credits_availbe > 0 || json.onetime_credit > 0 || mode.text === 'Lightning Mode') {
+                
+                let paid_user = false;
+                if(json.credits_availbe > 0 || json.onetime_credit > 0 || mode.text === 'Lightning Mode'){
+                    paid_user = true;
+                }else{
+                  paid_user = false;
+                }
+                   quota_used = json.quota_used;
+                   setRequest(2);
+                   setRequestProcess(1);
+                   document.getElementById("paraphrase").disabled = true;
+                   setDisableReset(true);
+      
+                   var customFilter = new Filter({ placeHolder: " "});
+                   filterText = customFilter.clean(filterText);
+                  // console.log(filterText);
+                   let text_sent_ai = filterText; 
+                  // console.log(text_sent_ai);return;
+                   let text_string = JSON.stringify({data: text_sent_ai});
+    
+              fetch('https://oneclickhuman.com/api_request/prompt_batch', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({is_live_mode: true, paid_user: paid_user, prompt: text_sent_ai, language: language, mode: mode.text}),
+              })
+              .then(response => response.text())
+              .then(promptId => {
+                  if (source) {
+                      source.close();
+                  }
+                  source = new EventSource("https://oneclickhuman.com/api_request/completion_batches/" + promptId);
+                  source.onmessage = function(event) {
+                  var dt = JSON.parse(event.data);
+                  
+           // Update quota at the start of paraphrasing
+           if(msgCnt === 0 && mode.text === 'Premium Mode'){
+               fetch('https://oneclickhuman.com/api_request/updatequota', {
+                  mode:'cors', 
+                  method: 'POST',
+                  body: JSON.stringify({
+                    'user_id' : userData.user_id,
+                    'quota_to_decresed': quota_to_decresed,
+                    'decreased_words': words,
+                  }),
+                  headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                  }
+               }).then(res => res.json())
+                 .then((json) => {
+                       setQuota({...quota, number: json.quota_decreased});
+                       
+                       if(json.quota_decreased > 0 && json.quota_decreased < 1000){
+                           if(quota_to_decresed === 2 && account_status.onetime_credit > 0){
+                               setQuota({...quota, number: account_status.onetime_credit, plan: account_status.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                               setQuotaToDecresed(3);
+                           }
+                       }
+  
+                       if(json.quota_decreased === 0){
+  
+                            if(quota.plan !== 700){
+                                 if(quota_to_decresed === 2){
+                                     if(account_status.onetime_credit > 0){
+                                         setQuota({...quota, number: account_status.onetime_credit, plan: account_status.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                                         setQuotaToDecresed(3); 
+                                     }else if(account_status.lifetime_credits > 0){
+                                        setQuota({...quota, number: account_status.lifetime_credits, plan: account_status.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                                        setQuotaToDecresed(4);
+                                     }else{
+                                        setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
+                                        setQuotaToDecresed(1);
+                                     }
+                                     setMonthlyCreditsExhausted(true);
+                                 }
+                                 if(quota_to_decresed === 3){
+                                     if(account_status.lifetime_credits > 0){
+                                        setQuota({...quota, number: account_status.lifetime_credits, plan: account_status.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
+                                        setQuotaToDecresed(4);
+                                     }else{
+                                       setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
+                                       setQuotaToDecresed(1);
+                                     }
+                                     setLifeTimeExhausted(true);
+                                 }
+                                 if(quota_to_decresed === 4){
+                                     setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
+                                     setQuotaToDecresed(1);
+                                 }
+                            }else{
+                               setShowupdatebtn(true);
+                            } 
+                       }
+                  });
+          }
+  
+      // When conversion is completed
+      if (dt.msg === '[DONE]') {
+           source.close();
+  
+        /* if(outputRes.substring(0,2) === '1>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h1>');
+         }
+         if(outputRes.substring(0,2) === '2>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h2>');
+         }
+         if(outputRes.substring(0,2) === '3>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h3>');
+         } 
+         if(outputRes.substring(0,2) === '4>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h4>');
+         } 
+         if(outputRes.substring(0,2) === '5>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h5>');
+         }
+         if(outputRes.substring(0,2) === '6>'){
+              outputRes = outputRes.replace(/^.{2}/g, '<h6>');
+         }       
+         if(outputRes.charAt(0) === '>'){
+              outputRes = outputRes.replace('>', '');
+         } */
+          
+           setParaphrasedText(outputRes);
+  
+           document.getElementById("paraphrase").disabled = false; 
+           setDisableReset(false);
+           setRequestProcess(0);
+           var myCanvas = document.createElement('canvas');
+           document.body.appendChild(myCanvas);
+           var myConfetti = confetti.create(myCanvas, {resize: true,useWorker: true});
+           myConfetti({
+              particleCount: 100,
+              spread: 40,
+              origin: { y: 0.6 }
+           });
+  
+           setTimeout(() => {
+              setTextBottomRight(true);
+              myCanvas.remove();  
+           }, 1500);
+  
+          /* fetch('https://oneclickhuman.com/api_request/add_record', {
+                  mode:'cors', 
+                  method: 'POST',
+                  body: JSON.stringify({
+                    'user_id' : login.userID,
+                    'user_email' : login.user_email,
+                    'mode' : mode.text,
+                    'input' : filterText,
+                    'output' : outputRes,
+                    'words_used' : getCount(filterText),
+                    'quota_used' : quota_used + 1
+                  }),
+                  headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                  }
+               }).then(res => res.json())
+                 .then((json) => {
+                      
+               }); */
+  
+      }else{
+  
+             if(dt.msg !== undefined){
+              console.log('....nothing');
+                  // let ms = dt.msg.replace(":", ",");
+                  // ms = ms.replace(";", ".");
+                  // ms = ms.replace("-", "");
+                  // ms = ms.replace("—", "");
+                  // outputRes = outputRes + ms; 
+  
+                  let ms = dt.msg.replace("`", "");
+                  ms = ms.replace("< ", "<");
+                  ms = ms.replace(" >", ">");
+                  ms = ms.replace(" /", "/");
+                  ms = ms.replace("/ >", "/>");
+                  ms = ms.replace(/\.([^\s])/g, '. $1');
+                  outputRes = outputRes + ms;
+             }
+  
+            // if(msgCnt < 1){
+              //  setParaphrasedText('<img style="width: 90%; height: 60px;" src="https://oneclickhuman.com/api-assets/images/textloader.svg" />');
+             // }
+  
+              if(msgCnt < 1){
+                console.log('....somehing');
+                setParaphrasedText('<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 50 && msgCnt < 53) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 100 && msgCnt < 103) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 140 && msgCnt < 143) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 190 && msgCnt < 193) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 240 && msgCnt < 243) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 290 && msgCnt < 293) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 345 && msgCnt < 348) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 390 && msgCnt < 393) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 440 && msgCnt < 443) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 495 && msgCnt < 498) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 545 && msgCnt < 548) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 590 && msgCnt < 593) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 650 && msgCnt < 653) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 700 && msgCnt < 703) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 750 && msgCnt < 753) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 800 && msgCnt < 803) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 850 && msgCnt < 853) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 900 && msgCnt < 903) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 950 && msgCnt < 953) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1000 && msgCnt < 1003) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1050 && msgCnt < 1053) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1100 && msgCnt < 1103) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1150 && msgCnt < 1153) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1150 && msgCnt < 1153) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1200 && msgCnt < 1203) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1250 && msgCnt < 1253) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1300 && msgCnt < 1303) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1350 && msgCnt < 1353) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1400 && msgCnt < 1403) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1450 && msgCnt < 1453) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1500 && msgCnt < 1503) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1550 && msgCnt < 1553) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              if(msgCnt > 1600 && msgCnt < 1603) {
+                setParaphrasedText(outputRes + '<div class="main-item"><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></div>');
+              }
+              msgCnt++;
+            }
+          };
+        });
+      }else{
+         // if daily quota found 0
+         showTimerPopup({status: true, current_date: json.current_date});
+      }
+    });
+  }
+  // End of content conversion module - paraphrasing
+  
+  
+    
+  const selectText = (nodeId) => {
+    const node = document.getElementById(nodeId);
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand("copy");
+    selection.removeAllRanges();
+    toast("Result Copied!", {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: true,
+      theme: "dark",
+      });
+  }
+  const copyContent = () =>{
+    selectText('result');
+  }
+  
 
    return(
+    <>
     <div id='tool'>
     <div id="top-bar">
         <span id="mode">
@@ -126,7 +661,7 @@ export const Tool = ({userData}) => {
  
         <span className="tooltip" id="tooltip-reset">{ disable_reset === true ? <i className="feather-repeat" style={{color: '#999', cursor: 'no-drop'}}></i> : <i className="feather-repeat" onClick={resetInputText}></i> }<span className="tooltiptext">Reset</span></span>
     </div>
-    <div id="row justify-content-center">
+    <div className="row justify-content-center">
       <div className="col-lg-6" id="left-column">
         <div id="InputWrapper">
            <SlateEditor focus={true} inputCallback={inputCallback} resetEditor={reset_editor} resetEditorFalse={resetEditorFalse} backspace={backspace}/>
@@ -140,100 +675,74 @@ export const Tool = ({userData}) => {
                 }
           </div>
         <div id="bottom-left">
-           { userData.user_status === 'success' ?
-            <>
-            {/* { quota.plan === 700 || monthly_credits_exhausted === true ?
+            { quota.plan === 700 || monthly_credits_exhausted === true ?
               <p id="small-text-left-bottom">
-                <DiamondIcon style={{
-                  fontSize: '14px', 
-                  color: '#fdb114', 
-                  verticalAlign: 'sub',
-                  marginRight: '4px',
-                }}/>
+                <i className="feather-zap" style={{color: '#FFC107'}}></i>
                 <span style={{
                    textDecoration: 'underline',
                    cursor: 'pointer'
                  }} 
-                 onClick={() => {setProModal(true); setShowBack(false); setSecondPro(true);}}>
+                 onClick={() => router.push('/pricing')}
+                 >
                  Upgrade
                 </span> to remove Word limit & improve conversion quality
              </p>
               : ''
-            } */}
+            }
              <span id="quota">
                { has_subscription && mode.text === 'Lightning Mode' ? 
                  <span className="quota-col">
-                   {/* <AccessTimeIcon/> */}
                    <span>Lightning Mode</span> <br></br>
                    <span><small>Unlimited Words</small></span>
                  </span>
                 : 
                <span className="quota-col">
-                 {/* <AccessTimeIcon/> */}
-                 {/* <span>{quota.text} {showupdatebtn === true ? <>{quota.number}</> : '' }</span> <br></br> */}
-                 <span>Words 1000</span> <br></br>
-                 {/* { showupdatebtn === true ?
-                   <button onClick={() => {setProModal(true); setSecondPro(true);}} className="myupgrade">Buy Words</button>
+                 <span>{quota.text} {showupdatebtn === true ? <>{quota.number}</> : '' }</span> <br></br>
+                 { showupdatebtn === true ?
+                   <button className="upgrade btn-default btn-small round" onClick={ () => router.push("/pricing") }>Buy Words</button>
                    :
                  <>  
                  <span><b>{quota.number} Words</b></span>
-                 <span className="tooltip">
-                   <InfoOutlinedIcon/>
+                 {/* <span className="tooltip">
+                   <i className="feather-info"></i>
                    <span className="tooltiptext">{quota.tooltip}</span>
-                   <span className="tooltiptext">Example text</span>
-                 </span> 
+                 </span>  */}
                  </>
-                 } */}
+                 }
                </span>
               }
  
                <span className="quota-col">
-                 {/* <SearchIcon/> */}
                  <span>Words</span><br></br>
                  <span id="word-count">
-                 {/* <b>{words}/{quota.plan === 700 ? free_word_limit : '1500'}</b> */}
-                 <b>200/1500</b>
-                 {/* { CountWarning === true ?
+                 <b>{words}/{quota.plan === 700 ? free_word_limit : '1500'}</b>
+                 { CountWarning === true ?
                   <span className="tooltip"><ErrorOutlineIcon style={{color: 'red'}}/>
                      <span className="tooltiptext warning-count">Words limit exceeded. Upgrade.</span>
                    </span>
                    : ''
-                  } */}
+                  }
                  </span>
                </span>
                <span className="quota-col tos">
                  <input
                   type="checkbox"
                   name="tos"
-                  // onChange={handleTosChange}
-                  // checked={TosChecked}
+                   onChange={handleTosChange}
+                   checked={TosChecked}
                  />
                  <span>I AGREE TO THE <a href="/tos" target="_blank">TOS</a> (NO ACADEMIC MISUSE)</span>
                </span>
              </span>
-               {/* { matches_medium === true ?
-                 <button id="paraphrase" type="button" className={login.account === 'active' ? 'paraphrase-loggedin' : ''} onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Humanize'}</span></button>
-               :
-                 <button id="paraphrase" type="button" className={login.account === 'active' ? 'paraphrase-loggedin' : ''} onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Make it Human'}</span></button>
-               } */}
-               <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={paraphrase2}><i></i>Humanize</button>
-             </>
-            : 
-              <span id="quota" style={{width: '100%', position: 'relative'}}>
-                <span className="quota_login" onClick={() => {setShow(true); setToggle('switch to login'); }}>Login</span> 
-                <span className="quota_login"> | </span>
-                <span className="quota_login" onClick={() => {setShow(true); setToggle('switch to register'); }}>Sign Up</span>
-                <button id="paraphrase" type="button" style={{position: 'absolute', top: '-8px', right: '2px'}} onClick={() => {setShow(true); setToggle('switch to login'); }}>Humanize</button>
-              </span>
-           }
- 
+             <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Humanize'}</span></button>
         </div>
       </div>
+
       <div className="col-lg-6" id="right-column">
        { request === 2 ? 
            <>
            <div id="result-warpper">
-             <div id="result" className={ height_decresed === true ? 'tool-height-decresed' : ''} contentEditable={true} suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: paraphrasedText}} />
+             <div id="result" contentEditable={true} suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: paraphrasedText}} />
            </div>
            <div id="right-bottom">
               <div>
@@ -241,7 +750,7 @@ export const Tool = ({userData}) => {
                  <span id="TextBottomRight">Finding the tone too informal? Try <span onClick={() => changeMode('Premium Mode')}>Premium Mode</span></span>
                  : ''
                }
-                <span className="tooltip" onClick={copyContent}><ContentCopyIcon/><span className="tooltiptext">Copy</span></span>
+                <span className="tooltip" onClick={copyContent}><i className="feather-copy"></i><span className="tooltiptext">Copy</span></span>
               </div>
              </div>
              </>
@@ -250,5 +759,9 @@ export const Tool = ({userData}) => {
       </div>
     </div>
    </div>
+   { timerPopup.status &&
+     <Timer currentDate={timerPopup.current_date} router={router} showTimerPopup={showTimerPopup}/>
+   }
+   </>
    )
 }

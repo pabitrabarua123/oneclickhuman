@@ -1,7 +1,8 @@
 import React from "react";
 
 import ProfileBody from "./ProfileBody";
-import UserNav from "../Common/UserNav";
+import AccountBody from "./AccountBody";
+//import UserNav from "../Common/UserNav";
 
 const ProfileDetails = () => {
   return (
@@ -9,9 +10,12 @@ const ProfileDetails = () => {
       <div className="rbt-main-content mr--0 mb--0">
         <div className="rbt-daynamic-page-content center-width">
           <div className="rbt-dashboard-content">
-            <UserNav title="Profile Details" />
+            {/* <UserNav title="Profile Details" /> */}
 
             <div className="content-page pb--50">
+              <div className="chat-box-list">
+                <AccountBody />
+              </div>
               <div className="chat-box-list">
                 <ProfileBody />
               </div>

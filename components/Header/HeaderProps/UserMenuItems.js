@@ -10,11 +10,11 @@ const UserMenuItems = ({ parentClass }) => {
       <ul className={parentClass}>
         <li>
           <Link
-            className={isActive("/profile-details") ? "active" : ""}
-            href="/profile-details"
+            className={isActive("/account") ? "active" : ""}
+            href="/account"
           >
             <i className="feather-user"></i>
-            <span>Profile Details</span>
+            <span>Account</span>
           </Link>
         </li>
       </ul>

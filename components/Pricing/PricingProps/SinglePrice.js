@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
+//import Link from "next/link";
 import React, { useEffect } from "react";
 import sal from "sal.js";
+import { useRouter } from "next/navigation";
 
-const SinglePrice = ({ data, incresePrice, parentClass }) => {
+const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
   useEffect(() => {
     sal();
 
@@ -20,6 +21,9 @@ const SinglePrice = ({ data, incresePrice, parentClass }) => {
       };
     });
   }, []);
+
+  const router = useRouter();
+
   return (
     <>
       <div className={`${parentClass} ${!incresePrice ? "mt--30" : ""}`}>
@@ -34,68 +38,50 @@ const SinglePrice = ({ data, incresePrice, parentClass }) => {
                 <h4 className="title">{data.title}</h4>
                 <div className="pricing">
                   <div className="price-wrapper">
-                    {data.price === 0 ? (
-                      ""
-                    ) : data.text === "" ? (
                       <span className="currency">$</span>
-                    ) : (
-                      ""
-                    )}
-
-                    {data.price === 0 ? (
-                      <span className="price">Free</span>
-                    ) : data.text ? (
-                      <span className="price sm-text">{data.text} </span>
-                    ) : (
-                      <span className="price">
-                        {incresePrice
-                          ? data.price <= 50
-                            ? data.price + 250
-                            : data.price + 400
-                          : data.price}
-                      </span>
-                    )}
+                      <span className="price">{data.amount - data.amount/2}</span>
                   </div>
-                  <span className="subtitle">{data.subTitle}</span>
+                  <span className="subtitle">USD Per Month</span>
                 </div>
                 <div className="separator-animated animated-true mt--30 mb--30"></div>
+                { monthlyPlan === data.credits && 
+                  <div style={{textAlign: 'center', marginBottom: '35px'}}>
+                    <span className="current-plan">Current Plan</span>
+                  </div>
+                }
               </div>
               <div className="pricing-body">
                 <ul className="list-style--1">
-                  {data.subItem.map((innerData, innerIndex) => (
-                    <li key={innerIndex}>
+                  {data.details.map((list) => (
+                    <li>
                       <i
-                        className={`feather-${
-                          innerData.isMinus ? "minus" : "check"
-                        }-circle pe-2`}
+                        className={`feather-check-circle pe-2`}
                       ></i>
-                      {innerData.text}
+                      {list}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
             <div className="pricing-footer">
-              {data.price === 0 ? (
-                <Link className="btn-default btn-border" href="#">
-                  Try it now
-                </Link>
-              ) : data.title === "Enterprise" ? (
-                <Link className={`btn-default btn-border`} href="#">
-                  Contact Sales
-                </Link>
-              ) : (
-                <Link
-                  className={`${
-                    data.title === "Business"
-                      ? "btn-default btn-border"
-                      : "btn-default"
-                  }`}
-                  href="#"
-                >
-                  Purchase Now
-                </Link>
-              )}
+               { monthlyPlan !== data.credits && 
+                 <div style={{textAlign: 'center'}}>
+                  <form action="https://oneclickhuman.com/api_request/create-checkout-session" method="POST">
+                    <input type="hidden" name="email_address" value="pabitravirtualnode123@gmail.com" />
+                    <input type="hidden" name="subscription" value={data.price_id} />
+                    <input type="hidden" name="promocode" value="PAB50BA" />
+                    { monthlyPlan === null &&
+                      <button className="btn-default btn-border" type="button" style={{display: 'inline-block'}} onClick={() => router.push('/signin')}>Purchase</button>
+                    }
+                    { monthlyPlan === 0 &&
+                      <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Purchase</button>
+                    }
+                    { monthlyPlan > 0 &&
+                      <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Upgrade</button>
+                     }
+                  </form>
+                 </div>
+                }
             </div>
           </div>
         </div>

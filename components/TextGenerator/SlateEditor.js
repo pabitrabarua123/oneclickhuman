@@ -190,7 +190,6 @@ const editor = useMemo(
 const handlePaste = () => {
  setTimeout(() => {
      let val = document.getElementById("inputText").innerHTML;
-     ToolHeightCallback(val);
  }, 500)
 };
 

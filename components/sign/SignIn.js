@@ -61,13 +61,40 @@ const handleSubmit = async (e) => {
     const session = await getSession();
     if (session) {
       console.log("Session data:", session);
-      dispatch({ type: 'success', payload: session.user });
+      fetchUserDetails(session.user.user_id, session.user.user_email, session.user.time);
       router.push("/humanizer");
     } else {
       console.log("No session available");
     }
   }
 };
+
+const fetchUserDetails = async (userID, userEmail, time) => {
+  dispatch({type: 'loading-user'});      
+  try {
+       let res = await fetch('https://oneclickhuman.com/api_request/checkquota', {
+        mode:'cors', 
+        method: 'POST',
+        body: JSON.stringify({
+          'user_id' : userID,
+        }),
+         headers: {
+           'Content-type': 'application/json; charset=UTF-8',
+         }
+       });
+
+       let data = await res.json();
+
+       console.log(data);
+       data.user_id = userID;
+       data.user_email = userEmail;
+       data.time = time;
+
+       dispatch({type: 'loading-success', payload: data});
+  } catch (error) {
+       dispatch({type: 'request-failure'});
+  }
+}
 
 
   return (

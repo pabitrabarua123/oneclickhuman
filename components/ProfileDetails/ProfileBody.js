@@ -31,7 +31,7 @@ const ProfileBody = () => {
                   aria-controls="profile"
                   aria-selected="true"
                 >
-                  <span className="title">Profile</span>
+                  <span className="title">Email</span>
                 </a>
               </li>
               <li role="presentation">
@@ -78,48 +78,21 @@ const ProfileBody = () => {
               >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="firstname">First Name</label>
-                    <input id="firstname" type="text" defaultValue="Fazlay" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
+                    <label htmlFor="lastname">Email</label>
                     <input id="lastname" type="text" defaultValue="Elahi" />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="username">User Name</label>
-                    <input id="username" type="text" defaultValue="Rainbow" />
+                    <label htmlFor="username">Password</label>
+                    <input id="username" type="password" defaultValue="Rainbow" />
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <div className="form-group">
-                    <label htmlFor="phonenumber">Phone Number</label>
-                    <input
-                      id="phonenumber"
-                      type="tel"
-                      defaultValue="+1-202-555-0174"
-                    />
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="bio">Bio</label>
-                    <textarea
-                      id="bio"
-                      cols="20"
-                      rows="5"
-                      value={text}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
+
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
                     <a className="btn-default" href="#">
-                      Update Info
+                      Update Email
                     </a>
                   </div>
                 </div>

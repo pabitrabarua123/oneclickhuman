@@ -3,48 +3,39 @@ import Link from "next/link";
 
 import avatar from "../../public/images/team/team-01.jpg";
 import UserMenuItems from "./HeaderProps/UserMenuItems";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const UserMenu = () => {
+
+  const { data: session } = useSession();
+
   return (
     <>
       <div className="inner">
         <div className="rbt-admin-profile">
-          <div className="admin-thumbnail">
-            <Image src={avatar} alt="User Images" />
-          </div>
           <div className="admin-info">
-            <span className="name">Rainbow Dev</span>
-            <Link
-              className="rbt-btn-link color-primary"
-              href="/profile-details"
-            >
-              View Profile
-            </Link>
+            <span className="name">{session && session.user.user_email}</span>
           </div>
         </div>
         <UserMenuItems parentClass="user-list-wrapper user-nav" />
         <hr className="mt--10 mb--10" />
         <ul className="user-list-wrapper user-nav">
           <li>
-            <Link href="#">
+            <Link href="/help">
               <i className="feather-help-circle"></i>
               <span>Help Center</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/profile-details">
-              <i className="feather-settings"></i>
-              <span>Settings</span>
             </Link>
           </li>
         </ul>
         <hr className="mt--10 mb--10" />
         <ul className="user-list-wrapper">
           <li>
-            <Link href="/signin">
-              <i className="feather-log-out"></i>
-              <span>Logout</span>
-            </Link>
+            <a href="#" style={{fontSize: '14px'}} onClick={(e) => {
+              e.preventDefault();
+              signOut({ callbackUrl: "/" });
+            }}
+            ><i className="feather-log-out"></i> Logout</a>
           </li>
         </ul>
       </div>

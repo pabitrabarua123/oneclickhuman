@@ -68,7 +68,7 @@ const HeaderDashboard = ({ display }) => {
                 <div className="header-btn d-none d-md-block">
                   <Link
                     className="btn-default btn-small round"
-                    href="/plans-billing"
+                    href="/pricing"
                   >
                     Upgrade <i className="feather-zap"></i>
                   </Link>

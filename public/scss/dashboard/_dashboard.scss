@@ -1,5 +1,5 @@
 :root {
-    --sidebar-width: 320px;
+    --sidebar-width: 280px;
 }
 
 .rbt-left-panel {
@@ -249,7 +249,6 @@
     margin-left: var(--sidebar-width);
     min-height: 450px;
     height: auto;
-    margin-bottom: 130px;
     margin-top: 80px;
 
     @media #{$smlg-device} {
@@ -1705,7 +1704,6 @@
     padding: 12px 15px 10px 12px;
     display: flex;
     justify-content: space-between;
-    color: #ccceef;
 }
 span#language {
     margin-right: inherit;
@@ -1790,6 +1788,16 @@ span#tooltip-reset {
     }
     span#tooltip-reset i.feather-repeat {
         cursor: pointer;
+    }
+    div#left-column, div#right-column {
+        overflow: hidden;
+        border-right: 2px solid #d5d5d5;
+    }
+    div#left-column, div#right-column {
+        padding: 25px 0 0;
+    }
+    button#paraphrase {
+        width: 150px;
     }
 
     /******tooltip*******/
@@ -1900,17 +1908,259 @@ span#tooltip-reset span.tooltiptext::after {
 }
  div#inputText {
     margin-bottom: 25px;
-    max-height: calc(100vh - 280px);
-    min-height: calc(100vh - 410px);
+    height: calc(100vh - 330px);
     overflow-y: scroll;
     padding: 0 20px 0 25px;
     width: 105%;
 }
+div#inputText p {
+    margin-bottom: 12px;
+    line-height: 20px;
+}
+div#inputText:focus-visible {
+    outline: unset !important;
+}
+
 div#placeholder {
-    color: silver;
     height: calc(100% - 72px);
     left: 0;
     padding: 0 25px;
     position: absolute;
     top: 0;
+}
+div#placeholder h4 {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+
+/****tool bottom left***/
+div#bottom-left {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .12);
+    display: flex;
+    float: left;
+    min-height: 58px;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+p#small-text-left-bottom {
+    font-size: 11px;
+    margin-bottom: 0;
+    position: absolute;
+    top: -15px;
+    left: 20px;
+}
+span#quota {
+    display: flex;
+    font-size: 12px;
+    width: calc(100% - 160px);
+}
+span.quota-col {
+    background: rgba(0, 0, 0, .35);
+    margin-right: 5px;
+    padding: 10px 5px;
+    text-align: center;
+}
+span.quota-col:first-child {
+    width: 32%;
+}
+span.quota-col:nth-child(2) {
+    width: 22%;
+}
+span.quota-col:nth-child(3) {
+    width: 40%;
+}
+input[name=tos] {
+    margin-right: 5px;
+    opacity: 1;
+    position: static;
+    display: inline;
+    width: unset;
+}
+span.quota-col.tos span {
+    font-size: 10px;
+}
+div#right-bottom {
+    bottom: 0;
+    float: left;
+    padding: 10px;
+    position: absolute;
+}
+div#right-bottom span {
+    float: right;
+    margin-left: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+div#right-bottom .tooltip {
+    opacity: 1;
+}
+#result-warpper {
+    overflow: hidden;
+}
+div#result {
+    margin-bottom: 0;
+    height: calc(100vh - 330px);
+    overflow-y: scroll;
+    padding: 0 20px 0 25px;
+    width: calc(100% + 20px);
+}
+i.feather-copy {
+    font-size: 17px;
+    cursor: pointer;
+}
+
+
+/*****Modern Content loading effect******/
+.main-item {
+    padding: 10px;
+    background-color: none;
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  @keyframes placeHolderShimmer {
+    0% {
+      background-position: -300px 0
+    }
+    100% {
+      background-position: 300px 0
+    }
+  }
+  
+  .animated-background {
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-name: placeHolderShimmer;
+      animation-timing-function: linear;
+      background : linear-gradient(90deg, rgb(0 0 0 / 30%) 8%, #e3e3e321 50%, rgba(0, 0, 0, .23));
+      background-size: 100% 30px;
+      height: 19px;
+      position: relative;
+      margin-top: 10px;
+      border-radius: 4px;
+  }
+
+
+  .dot-pulse {
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    box-shadow: 9999px 0 0 -5px;
+    animation: dot-pulse 1.5s infinite linear;
+    animation-delay: 0.25s;
+    display: inline-block;
+  }
+  .dot-pulse::before, .dot-pulse::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+  }
+  .dot-pulse::before {
+    box-shadow: 9984px 0 0 -5px;
+    animation: dot-pulse-before 1.5s infinite linear;
+    animation-delay: 0s;
+  }
+  .dot-pulse::after {
+    box-shadow: 10014px 0 0 -5px;
+    animation: dot-pulse-after 1.5s infinite linear;
+    animation-delay: 0.5s;
+  }
+  
+  @keyframes dot-pulse-before {
+    0% {
+      box-shadow: 9984px 0 0 -5px;
+    }
+    30% {
+      box-shadow: 9984px 0 0 2px;
+    }
+    60%, 100% {
+      box-shadow: 9984px 0 0 -5px;
+    }
+  }
+  @keyframes dot-pulse {
+    0% {
+      box-shadow: 9999px 0 0 -5px;
+    }
+    30% {
+      box-shadow: 9999px 0 0 2px;
+    }
+    60%, 100% {
+      box-shadow: 9999px 0 0 -5px;
+    }
+  }
+  @keyframes dot-pulse-after {
+    0% {
+      box-shadow: 10014px 0 0 -5px;
+    }
+    30% {
+      box-shadow: 10014px 0 0 2px;
+    }
+    60%, 100% {
+      box-shadow: 10014px 0 0 -5px;
+    }
+  }
+
+  .upgrade {
+    padding: 0 12px !important;
+    font-size: 10px !important;
+    line-height: 10px !important;
+    height: 23px !important;
+  }
+  span.current-plan {
+    background: linear-gradient(94deg, #dd00ac 10.66%, #7130c3 53.03%, #410093 96.34%, rgba(255, 0, 238, 0.26) 191.41%, rgba(255, 59, 212, 0) 191.43%);
+    background-size: 200% auto;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+}
+div#popup {
+    align-items: center;
+    background: rgba(0, 0, 0, .8);
+    bottom: 0;
+    display: flex;
+    height: 100vh;
+    position: fixed;
+    transition: opacity .2s ease, transform .2s ease, -webkit-transform .2s ease;
+    width: 100%;
+    z-index: 999999999;
+    top: 0;
+    left: 0;
+}
+div#popup-main {
+    background: #0f0f23;
+    border-radius: 20px;
+    margin: 0 auto;
+    max-height: 100vh;
+    padding: 20px;
+    position: relative;
+    width: 60%;
+}
+div#popup-inner {
+    margin: 0 auto;
+    max-width: 750px;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+span#popup-close {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+}
+div#timer-counter {
+    font-size: 60px;
+    font-weight: 600;
+    margin: 5px 0 30px;
 }

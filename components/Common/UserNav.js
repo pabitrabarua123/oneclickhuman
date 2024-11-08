@@ -23,7 +23,7 @@ const UserNav = ({ title }) => {
                     className={isActive(data.link) ? "active" : ""}
                   >
                     <span>
-                      {data.text === "Profile" ? "Profile Details" : data.text}
+                      {data.text === "Profile" ? "Account Details" : data.text}
                     </span>
                   </Link>
                 </li>

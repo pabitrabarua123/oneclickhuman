@@ -3,6 +3,8 @@
 import React, { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "../store/provider";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "bootstrap/scss/bootstrap.scss";
 
@@ -28,6 +30,7 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <ReduxProvider>
             {children}
+            <ToastContainer />
           </ReduxProvider>
         </SessionProvider>
       </body>

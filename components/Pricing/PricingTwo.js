@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import sal from "sal.js";
 
-import PricingData from "../../data/home.json";
+//import PricingData from "../../data/home.json";
 import SinglePrice from "./PricingProps/SinglePrice";
 //import Compare from "./Compare";
+import FreeItem from "./PricingProps/FreeItem";
+import { useSelector } from "react-redux";
 
 const PricingTwo = ({
   parentClass,
@@ -30,6 +32,30 @@ const PricingTwo = ({
       };
     });
   }, []);
+
+  const monthlyPlan = useSelector(state => state.monthly_plan);
+
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetch('https://oneclickhuman.com/api_request/get_prices', {
+       method: 'GET'
+     }).then(res => res.json())
+       .then((json) => {
+        // console.log(json.products);
+        let items = [];
+         json.products.map((product) => {
+           if(product.is_subscription === 1 && product.id !== 2){
+               let product_details = JSON.parse(product.details);
+               items.push({id: product.id, title: product.title, amount: product.amount, credits: product.credits, price_id: product.price_id, details: product_details});
+           }
+         });
+         setProducts(items);
+     });
+ }, [1]); 
+
+ useEffect(() => {
+   console.log(products);
+ }, [products])
 
   return (
     <>
@@ -110,9 +136,11 @@ const PricingTwo = ({
                   aria-labelledby="nav-home-tab"
                 >
                   <div className="row row--15 mt_dec--30">
-                    {PricingData &&
-                      PricingData.pricing
-                        .slice(start, end)
+                   {products.length > 0 && 
+                     <FreeItem parentClass={parentClass} incresePrice={false}/>
+                   }
+                    {products.length > 0 &&
+                      products
                         .map((data, index) => (
                           <SinglePrice
                             {...data}
@@ -120,12 +148,13 @@ const PricingTwo = ({
                             key={index}
                             parentClass={parentClass}
                             incresePrice={false}
+                            monthlyPlan={monthlyPlan}
                           />
                         ))}
                   </div>
                 </div>
 
-                <div
+                {/* <div
                   className="tab-pane fade"
                   id="nav-profile"
                   role="tabpanel"
@@ -145,7 +174,7 @@ const PricingTwo = ({
                           />
                         ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             {/* <Compare /> */}

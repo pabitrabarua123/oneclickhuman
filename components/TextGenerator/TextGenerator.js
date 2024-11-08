@@ -16,8 +16,8 @@ const TextGenerator = ({userData}) => {
         let x = e.pageX - bgflashlight.offsetLeft;
         let y = e.pageY - bgflashlight.offsetTop;
 
-        bgflashlight.style.setProperty("--x", x + "px");
-        bgflashlight.style.setProperty("--y", y + "px");
+       // bgflashlight.style.setProperty("--x", x + "px");
+       // bgflashlight.style.setProperty("--y", y + "px");
       };
     });
   }, []);
