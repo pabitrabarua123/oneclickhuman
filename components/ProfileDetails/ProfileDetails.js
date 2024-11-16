@@ -10,6 +10,19 @@ import { useRouter } from "next/navigation";
 const ProfileDetails = () => {
 
   const account_status = useSelector(state => state);
+  if(!account_status.user_id){
+     return(
+      <div className="rbt-main-content mr--0 mb--0">
+      <div className="rbt-daynamic-page-content center-width">
+        <div className="rbt-dashboard-content">
+          {/* <UserNav title="Profile Details" /> */}
+          <br></br>
+           <p>Unauthorized access</p>
+          </div>
+          </div>
+          </div>
+     )
+  }
   const [is_renewal_date_crossed, setRenewalDateCrossed] = useState(0);
   const router = useRouter();
 
