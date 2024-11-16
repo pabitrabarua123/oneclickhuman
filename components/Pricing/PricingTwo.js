@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import sal from "sal.js";
 
-//import PricingData from "../../data/home.json";
+import PricingData from "../../data/home.json";
 import SinglePrice from "./PricingProps/SinglePrice";
+import OnetimePrice from "./PricingProps/OnetimePrice";
 //import Compare from "./Compare";
 import FreeItem from "./PricingProps/FreeItem";
 import { useSelector } from "react-redux";
@@ -36,26 +37,34 @@ const PricingTwo = ({
   const monthlyPlan = useSelector(state => state.monthly_plan);
 
   const [products, setProducts] = useState([]);
+  const [products_onetime, setProductsOnetime] = useState([]);
   useEffect(() => {
-    fetch('https://oneclickhuman.com/api_request/get_prices', {
+    fetch('https://oneclickhuman.com/api_request/get_prices_test', {
        method: 'GET'
      }).then(res => res.json())
        .then((json) => {
-        // console.log(json.products);
+         console.log(json.products);
         let items = [];
+        let items_onetime = [];
          json.products.map((product) => {
            if(product.is_subscription === 1 && product.id !== 2){
                let product_details = JSON.parse(product.details);
                items.push({id: product.id, title: product.title, amount: product.amount, credits: product.credits, price_id: product.price_id, details: product_details});
            }
+           if(product.is_subscription === 0){
+              let product_details = JSON.parse(product.details);
+              items_onetime.push({id: product.id, title: product.title, amount: product.amount, credits: product.credits, price_id: product.price_id, details: product_details});
+           }
          });
          setProducts(items);
+         setProductsOnetime(items_onetime);
      });
  }, [1]); 
 
  useEffect(() => {
    console.log(products);
- }, [products])
+   console.log(products_onetime);
+ }, [products, products_onetime])
 
   return (
     <>
@@ -90,7 +99,7 @@ const PricingTwo = ({
                     ""
                   )}
 
-                  {/* <nav className="chatenai-tab">
+                  <nav className="chatenai-tab">
                     <div
                       className="tab-btn-grp nav nav-tabs mb-3 text-center justify-content-center"
                       id="nav-tab"
@@ -118,17 +127,20 @@ const PricingTwo = ({
                         aria-controls="nav-profile"
                         aria-selected="false"
                       >
-                        Yearly
-                        <span className="rainbow-badge-card badge-border">
+                        Lifetime
+                        {/* <span className="rainbow-badge-card badge-border">
                           20% Off
-                        </span>
+                        </span> */}
                       </button>
                     </div>
-                  </nav> */}
+                  </nav>
                 </div>
               </div>
 
               <div className={childClass} id="nav-tabContent">
+                { products.length === 0 &&
+                  <p style={{textAlign: 'center', marginTop: '50px'}}>Loading Plans...</p> 
+                }
                 <div
                   className="tab-pane fade active show"
                   id="nav-home"
@@ -154,27 +166,25 @@ const PricingTwo = ({
                   </div>
                 </div>
 
-                {/* <div
+                <div
                   className="tab-pane fade"
                   id="nav-profile"
                   role="tabpanel"
                   aria-labelledby="nav-profile-tab"
                 >
                   <div className="row row--15">
-                    {PricingData &&
-                      PricingData.pricing
-                        .slice(start, end)
-                        .map((data, index) => (
-                          <SinglePrice
-                            {...data}
-                            data={data}
-                            key={index}
-                            parentClass={parentClass}
-                            incresePrice={true}
+                    {products_onetime.length > 0 &&
+                      products_onetime.map((data, index) => (
+                        <OnetimePrice
+                          {...data}
+                          data={data}
+                          key={index}
+                          parentClass={parentClass}
+                          incresePrice={false}
                           />
                         ))}
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             {/* <Compare /> */}

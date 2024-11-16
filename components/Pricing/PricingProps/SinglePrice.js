@@ -41,7 +41,7 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
                 <div className="pricing">
                   <div className="price-wrapper">
                       <span className="currency">$</span>
-                      <span className="price">{data.amount - data.amount/2}</span>
+                      <span className="price">{Math.round(data.amount - data.amount/2)}</span>
                   </div>
                   <span className="subtitle">USD Per Month</span>
                 </div>
@@ -68,7 +68,7 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
             <div className="pricing-footer">
                { monthlyPlan !== data.credits && 
                  <div style={{textAlign: 'center'}}>
-                  <form action="https://oneclickhuman.com/api_request/create-checkout-session" method="POST">
+                  <form action="https://oneclickhuman.com/api_request/create-checkout-session-test" method="POST">
                     <input type="hidden" name="email_address" value={session? session.user.user_email : ''} />
                     <input type="hidden" name="subscription" value={data.price_id} />
                     <input type="hidden" name="promocode" value="PAB50BA" />

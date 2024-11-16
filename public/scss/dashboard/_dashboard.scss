@@ -1791,13 +1791,13 @@ span#tooltip-reset {
     }
     div#left-column, div#right-column {
         overflow: hidden;
-        border-right: 2px solid #d5d5d5;
+        border-right: 1px solid #555279;
     }
     div#left-column, div#right-column {
         padding: 25px 0 0;
     }
     button#paraphrase {
-        width: 150px;
+        width: 120px;
     }
 
     /******tooltip*******/
@@ -1955,7 +1955,7 @@ p#small-text-left-bottom {
 span#quota {
     display: flex;
     font-size: 12px;
-    width: calc(100% - 160px);
+    width: calc(100% - 120px);
 }
 span.quota-col {
     background: rgba(0, 0, 0, .35);
@@ -2144,11 +2144,10 @@ div#popup-main {
     max-height: 100vh;
     padding: 20px;
     position: relative;
-    width: 60%;
+    width: 55%;
 }
 div#popup-inner {
     margin: 0 auto;
-    max-width: 750px;
     padding: 10px 0;
     text-align: center;
     width: 100%;
@@ -2160,7 +2159,87 @@ span#popup-close {
     cursor: pointer;
 }
 div#timer-counter {
-    font-size: 60px;
+    font-size: 45px;
     font-weight: 600;
-    margin: 5px 0 30px;
+    margin: 5px 0 20px;
+}
+.progress-top {
+    display: flex;
+    margin-bottom: 5px;
+}
+.progress-top p {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.progress-top .progress-value {
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 0;
+    margin-top: 30px;
+}
+p.plan-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+.progress-btm {
+    float: right;
+    font-size: 13px;
+    margin-top: 6px;
+}
+p.plan-amnt {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 44px;
+}
+button.position-change {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 40px;
+    cursor: pointer;
+    min-width: 150px;
+}
+.plan-amnt span:nth-child(1) {
+    font-size: 20px;
+    vertical-align: top;
+}
+.plan-amnt span:nth-child(2) {
+    font-size: 50px;
+    font-weight: 600;
+    vertical-align: text-top;
+}
+.plan-amnt span:nth-child(3) {
+    font-size: 14px;
+    vertical-align: top;
+}
+div#tool {
+    border: 1px solid #555279;
+    border-radius: 4px;
+}
+body.active-light-mode div#top-bar, 
+body.active-light-mode span.quota-col {
+    background-color: #efefff;
+}
+body.active-light-mode div#tool {
+    border: 1px solid #e4e4ee;
+}
+body.active-light-mode div#left-column, 
+body.active-light-mode div#right-column {
+    border-right: 1px solid #e4e4ee;
+}
+body.active-light-mode #top-bar {
+    border-bottom: 1px solid #e4e4ee;
+}
+div#popup h3 {
+    font-size: 30px;
+}
+div#popup p {
+    margin-bottom: 10px;
+}
+.next-payment-row {
+    display: flex;
+    gap: 15px;
 }

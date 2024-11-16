@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const authenticateUser = async (email, password) => {
   try {
-    const response = await fetch('https://oneclickhuman.com/api_request/login', {
+    const response = await fetch('https://oneclickhuman.com/api_request/login_test', {
       mode: 'cors',
       method: 'POST',
       body: JSON.stringify({

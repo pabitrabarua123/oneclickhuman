@@ -72,7 +72,7 @@ const handleSubmit = async (e) => {
 const fetchUserDetails = async (userID, userEmail, time) => {
   dispatch({type: 'loading-user'});      
   try {
-       let res = await fetch('https://oneclickhuman.com/api_request/checkquota', {
+       let res = await fetch('https://oneclickhuman.com/api_request/checkquota_test', {
         mode:'cors', 
         method: 'POST',
         body: JSON.stringify({

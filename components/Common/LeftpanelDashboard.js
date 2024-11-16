@@ -38,7 +38,7 @@ const LeftpanelDashboard = () => {
                         href="/pricing"
                       >
                         <i className="feather-briefcase"></i>
-                        <span>Manage Subsription</span>
+                        <span>Manage Subscription</span>
                       </Link>
                     </li>
                   </ul>
@@ -48,12 +48,7 @@ const LeftpanelDashboard = () => {
                       HeaderData.leftPanel.map((data, index) => (
                         <li key={index}>
                           <Link
-                            href="/humanizer"
-                            className={
-                              isActive(data.link)
-                                ? "active"
-                                : `${data.isDisable ? "disabled" : ""}`
-                            }
+                            href={data.link}
                           >
                             <Image
                               className={`${
@@ -66,7 +61,7 @@ const LeftpanelDashboard = () => {
                               height={35}
                               alt="Oneclickhuman"
                             />
-                            <span>{data.title} <br/><small>Undetectable Content Generator</small></span>
+                            <span>{data.title}</span>
                           </Link>
                         </li>
                       ))}
@@ -101,7 +96,7 @@ const LeftpanelDashboard = () => {
 
           <div className="subscription-box">
             <div className="inner">
-              <Link href="/profile-details" className="autor-info">
+              {/* <Link href="/profile-details" className="autor-info">
                 <div className="author-img active">
                   <Image
                     className="w-100"
@@ -116,7 +111,7 @@ const LeftpanelDashboard = () => {
                   <p>trentadam@net</p>
                 </div>
                 <div className="author-badge">Free</div>
-              </Link>
+              </Link> */}
               <div className="btn-part">
                 <Link href="/pricing" className="btn-default btn-border">
                   Upgrade To Pro

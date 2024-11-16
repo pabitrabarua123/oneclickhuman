@@ -63,6 +63,12 @@ const accountReducer = (state = accountInfo, action) => {
         role : action.payload.role
     };
 
+    case 'quota-update-monthly':
+      return {...state, credits_availbe: action.quota};
+
+    case 'quota-update-onetime':
+      return {...state, onetime_credit: action.quota};  
+
     default: 
       return state;
   }

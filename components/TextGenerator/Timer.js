@@ -36,8 +36,8 @@ export default function Timer({currentDate, router, showTimerPopup}){
           <div id="first-pro">
            <Image 
              src={timer} 
-             width={150}
-             height={150}
+             width={130}
+             height={130}
              alt="Timer"
            />
            <h3>Daily Word Balance Exhausted</h3>
@@ -45,7 +45,7 @@ export default function Timer({currentDate, router, showTimerPopup}){
            <div id="timer-counter">
              {countdown}       
            </div>
-           <button onClick={() => router.push('/pricing')} className="btn-default btn-small round"><i className="feather-unlock"></i> Unlock Words</button>
+           <button onClick={() => router.push('/pricing')} className="btn-default btn-small round"><i className="feather-unlock"></i> Unlock More Words</button>
           </div>
         </div>
         <span id="popup-close" onClick={() => showTimerPopup({status: false, current_date: null})}><i className="feather-x"></i></span>

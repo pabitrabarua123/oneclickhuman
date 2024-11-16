@@ -1,21 +1,144 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import ProfileBody from "./ProfileBody";
-import AccountBody from "./AccountBody";
+//import AccountBody from "./AccountBody";
 //import UserNav from "../Common/UserNav";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const ProfileDetails = () => {
+
+  const account_status = useSelector(state => state);
+  const [is_renewal_date_crossed, setRenewalDateCrossed] = useState(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    if(account_status.subscription_renewal_date !== ''){
+      var next_date = account_status.subscription_renewal_date;
+      var next_arr = next_date.split('T');
+      var next_date_real = next_arr[0];
+      var is_renewal_date_crossed = 0;
+      if (new Date() > new Date(next_date_real)){
+        setRenewalDateCrossed(1);
+      }else{
+        setRenewalDateCrossed(0);
+      }
+    }
+  }, [account_status]);
+
+  const openCustomerPanel = () => {
+    window.open('https://billing.stripe.com/p/login/dR66r9czj7NJeEU5kk', '_blank');
+  }
+
   return (
     <>
       <div className="rbt-main-content mr--0 mb--0">
         <div className="rbt-daynamic-page-content center-width">
           <div className="rbt-dashboard-content">
             {/* <UserNav title="Profile Details" /> */}
+            <br></br>
+            <h3>Account Details</h3>
 
             <div className="content-page pb--50">
-              <div className="chat-box-list">
-                <AccountBody />
+              <div className="row">
+                <div className="col-lg-6">
+                  
+                  <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
+                    <p className="plan-heading">Word Balance Available</p> 
+                    
+                    { account_status.subscrption_status === 1 &&
+                     <div style={{marginBottom: '35px'}}>
+                      <div className="progress-top">
+                        <p className="progress-label">Monthly Word Balance</p>
+                        <p className="progress-value">{account_status.credits_availbe.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/{account_status.monthly_plan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                      </div>
+                      <ProgressBar bgcolor="#48c1c7" progress={account_status.credits_availbe} max={account_status.monthly_plan}/> 
+                      {/* <div className="progress-btm">{subscription_expiry} days to expiry</div> */}
+                     </div>
+                    }
+
+                    { account_status.onetime_plan !== 0 &&
+                     <div style={{marginBottom: '35px'}}>
+                      <div className="progress-top">
+                        <p className="progress-label">Onetime Word Balance</p>
+                        <p className="progress-value">{account_status.onetime_credit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/{account_status.onetime_plan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                      </div>
+                      <ProgressBar bgcolor="#48c1c7" progress={account_status.onetime_credit} max={account_status.onetime_plan}/> 
+                      <div className="progress-btm">No expiry</div>
+                     </div>
+                    }
+
+                    <div style={{marginBottom: '40px'}}>
+                     <div className="progress-top">
+                       <p className="progress-label">Free Daily Word Balance</p>
+                       <p className="progress-value">{account_status.quota.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/{(700).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                     </div>
+                     <ProgressBar bgcolor="orange" progress={account_status.quota} max="700" /> 
+                     {/* { reset_hours !== 0 ?
+                       <div className="progress-btm">{reset_hours} hours to refill</div>
+                       : ''
+                     } */}
+                   </div> 
+                   <div className="next-payment-row">
+                    <button className="btn-default btn-small round" onClick={() => router.push('/pricing')}>Purchase Lifetime Word Balance</button>
+                    <button className="btn-default btn-small round" onClick={() => router.push('/pricing')}>Upgrade Monthly Plan</button>
+                   </div>
+                      </div>
+
+                    { account_status.subscrption_status === 1 && is_renewal_date_crossed === 0 && 
+                      <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
+                        <p className="plan-heading">Monthly Plan</p>
+                        <p className="features">
+                         { account_status.monthly_plan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Words/month <br></br>
+                         Access to All Modes <br></br>
+                         Increased Speed <br></br>
+                         Premium Support <br></br>
+                         1500 Words/Article
+                        </p>
+                        <p className="plan-amnt">
+                         <span>{account_status.currency}</span>
+                         <span>{account_status.subscription_amount}</span>
+                         <span>/month</span>
+                        </p>
+                        <button className="position-change btn-default btn-small round">Upgrade Plan</button>
+                      </div>
+                    }
+
+                    { account_status.onetime_credit > 0 && 
+                       <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
+                       <p className="plan-heading">Onetime Plan</p>
+                       <p className="features">
+                        { account_status.onetime_credit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Words <br></br>
+                        Access to All Modes <br></br>
+                        Increased Speed <br></br>
+                        Premium Support <br></br>
+                        1500 Words/Article
+                       </p>
+                       <p className="plan-amnt">
+                        <span>{account_status.currency}</span>
+                        <span>{account_status.onetime_amount}</span>
+                       </p>
+                       <button className="position-change btn-default btn-small round">Upgrade Plan</button>
+                     </div>                   
+                    }
+
+                </div>
+                <div className="col-lg-6">
+                  { account_status.subscrption_status === 1 && account_status.cancellation_status === 0 && 
+                     <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
+                       <p className="plan-heading">Next Payment</p>
+                       <p style={{fontSize: '20px', fontWeight: '500'}}>{account_status.subscription_renewal_date.split('T')[0]}</p>
+                       <div className="next-payment-row">
+                        <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Update Payment Method</button>
+                        <button className="btn-default btn-small round">Cancel Subscription</button>
+                        <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Invoice</button>
+                       </div>
+                     </div>                   
+                  }
+                </div>
               </div>
+              
               <div className="chat-box-list">
                 <ProfileBody />
               </div>

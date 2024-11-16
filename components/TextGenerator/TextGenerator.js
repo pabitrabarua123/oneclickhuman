@@ -30,7 +30,7 @@ const TextGenerator = ({userData}) => {
             data-sal-duration="700"
             data-sal-delay="100"
           >
-            <div className="chat-box author-speech bg-flashlight">
+            <div className="chat-box author-speech">
               <div className="inner">
                 <Tool userData={userData}/>
               </div>

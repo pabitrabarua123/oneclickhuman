@@ -8,8 +8,13 @@ import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
 import { Filter } from 'bad-words';
 import Timer from "./Timer";
+import { useDispatch } from "react-redux";
+import { useAppContext } from "@/context/Context";
 
 export const Tool = ({userData}) => {
+
+  const dispatch = useDispatch();
+  const { toolTopbarMenu } = useAppContext();
 
   const [has_subscription, setHaveSubscription] = useState(false);
   const [monthly_credits_exhausted, setMonthlyCreditsExhausted] = useState(false);
@@ -34,7 +39,7 @@ export const Tool = ({userData}) => {
         //setPlan({...plan, monthly: false, onetime: true});
         //console.log('both');
         if(userData.credits_availbe > 1000 && userData.onetime_credit > 0){
-             setQuota({...quota, number: userData.credits_availbe, plan: json.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
+             setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
              setQuotaToDecresed(2);
         }else if(userData.credits_availbe > 1000){
           setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
@@ -353,6 +358,7 @@ export const Tool = ({userData}) => {
                }).then(res => res.json())
                  .then((json) => {
                        setQuota({...quota, number: json.quota_decreased});
+                       //dispatch({type: ''});
                        
                        if(json.quota_decreased > 0 && json.quota_decreased < 1000){
                            if(quota_to_decresed === 2 && account_status.onetime_credit > 0){
@@ -650,12 +656,14 @@ export const Tool = ({userData}) => {
           showLanguage={showLanguage} 
           changeLanguage={changeLanguage}
        />
-
-       <ul id="topbar-ul">
+       
+       { toolTopbarMenu &&
+         <ul id="topbar-ul">
           <li>{mode.text === 'Premium Mode' ? <i className="feather-check"></i> : <i className="feather-x"></i> } Retains Formatting</li>
           <li><i className="feather-check"></i> Perfect Grammar</li>
           <li><i className="feather-check"></i> High Readability Score</li>
-        </ul>
+         </ul>
+       }
         
         <a id="documentation" href="/documentation"><i className="feather-file-text"></i> Docs</a>
  

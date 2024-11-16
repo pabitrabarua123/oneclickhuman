@@ -334,9 +334,17 @@
   ],
   "leftPanel": [
     {
-      "link": "/text-generator",
+      "link": "/humanizer",
       "isDisable": false,
       "title": "Humanizer",
+      "img": "/images/generator-icon/text.png",
+      "imgLight": "/images/light/generator-icon/text.png",
+      "badge": ""
+    },
+    {
+      "link": "/humanizer",
+      "isDisable": false,
+      "title": "Undetectable Content Generator",
       "img": "/images/generator-icon/text.png",
       "imgLight": "/images/light/generator-icon/text.png",
       "badge": ""

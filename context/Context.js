@@ -12,6 +12,7 @@ const Context = ({ children }) => {
   const [showItem, setShowItem] = useState(true);
   const [activeMobileMenu, setActiveMobileMenu] = useState(true);
   const [isLightTheme, setLightTheme] = useState(true);
+  const [toolTopbarMenu, showToolTopbarMenu] = useState(true);
 
   const checkScreenSize = () => {
     if (window.innerWidth < 1200) {
@@ -20,6 +21,9 @@ const Context = ({ children }) => {
     } else {
       setMobile(true);
       setRightBar(true);
+    }
+    if(window.innerWidth < 900){
+      showToolTopbarMenu(false);
     }
   };
 
@@ -79,6 +83,7 @@ const Context = ({ children }) => {
         isLightTheme,
         setLightTheme,
         toggleTheme,
+        toolTopbarMenu
       }}
     >
       {children}
