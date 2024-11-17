@@ -15,7 +15,6 @@ const ProfileDetails = () => {
       <div className="rbt-main-content mr--0 mb--0">
       <div className="rbt-daynamic-page-content center-width">
         <div className="rbt-dashboard-content">
-          {/* <UserNav title="Profile Details" /> */}
           <br></br>
            <p>Unauthorized access</p>
           </div>
@@ -42,6 +41,28 @@ const ProfileDetails = () => {
 
   const openCustomerPanel = () => {
     window.open('https://billing.stripe.com/p/login/dR66r9czj7NJeEU5kk', '_blank');
+  }
+
+  const [cancelationStatus, setCancelationStatus] = useState(null);
+  async function cancelSubscription() {
+    setCancelationStatus(null);
+    try {
+      let res = await fetch('https://oneclickhuman.com/api_request/cancel_subscription', {
+       mode:'cors', 
+       method: 'POST',
+       body: JSON.stringify({
+         'user_id' : userID,
+       }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      });
+
+      let data = await res.json();
+      setCancelationStatus(data.status);
+ } catch (error) {
+     console.log(error);
+ }
   }
 
   return (
@@ -144,9 +165,10 @@ const ProfileDetails = () => {
                        <p style={{fontSize: '20px', fontWeight: '500'}}>{account_status.subscription_renewal_date.split('T')[0]}</p>
                        <div className="next-payment-row">
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Update Payment Method</button>
-                        <button className="btn-default btn-small round">Cancel Subscription</button>
+                        <button className="btn-default btn-small round" onClick={() => cancelSubscription()}>Cancel Subscription</button>
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Invoice</button>
                        </div>
+                       <p>{cancelationStatus && cancelationStatus}</p>
                      </div>                   
                   }
                 </div>
