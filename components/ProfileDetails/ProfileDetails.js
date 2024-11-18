@@ -51,7 +51,7 @@ const ProfileDetails = () => {
        mode:'cors', 
        method: 'POST',
        body: JSON.stringify({
-         'user_id' : userID,
+         'user_id' : account_status.user_id,
        }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
