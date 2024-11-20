@@ -14,26 +14,31 @@ const AccordionItem = () => {
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExamplea">
       <div class="accordion-body card-body">
-      <table>
-                  <tr>
-                    <th>Conversion Mode</th>
-                    <th>Success Rate in Beating AI Detection Tools</th>
-                    <th>Quality</th>
-                    <th>Output Formatting</th>
-                  </tr>
-                  <tr>
-                    <td>Lightning Mode</td>
-                    <td>85% (Moderate) A few tools may detect AI .</td>
-                    <td>Good ( Super high speed)</td>
-                    <td>Plain text</td>
-                  </tr>
-                  <tr>
-                    <td>Premium Mode</td>
-                    <td>95% (High)</td>
-                    <td>High</td>
-                    <td>Maintains Formatting</td>
-                  </tr>
-                </table>
+<table>
+  <thead>
+    <tr>
+      <th>Conversion Mode</th>
+      <th>Success Rate in Beating AI Detection Tools</th>
+      <th>Quality</th>
+      <th>Output Formatting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lightning Mode</td>
+      <td>85% (Moderate) - A few tools may detect AI.</td>
+      <td>Good (Super high speed)</td>
+      <td>Plain text</td>
+    </tr>
+    <tr>
+      <td>Premium Mode</td>
+      <td>95% (High)</td>
+      <td>High</td>
+      <td>Maintains Formatting</td>
+    </tr>
+  </tbody>
+</table>
+
                 <br></br>
                 <h4>1️⃣ Premium Mode:</h4>
                 <ul className="my-ul">

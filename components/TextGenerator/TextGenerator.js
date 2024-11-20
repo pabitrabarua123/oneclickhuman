@@ -21,6 +21,7 @@ const TextGenerator = ({userData}) => {
       };
     });
   }, []);
+  
   return (
     <>
           <div
@@ -32,13 +33,18 @@ const TextGenerator = ({userData}) => {
           >
             <div className="chat-box author-speech">
               <div className="inner">
-                <Tool userData={userData}/>
+                 { userData.email_verification === true ?
+                   <Tool userData={userData}/> 
+                   :
+                   <p>Using Humanizer needs Email to be verified, please go to your inbox and verify.</p>
+                 }
               </div>
             </div>
           </div>
 
     </>
   );
+
 };
 
 export default TextGenerator;

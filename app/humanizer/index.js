@@ -6,20 +6,57 @@ import PopupMobileMenu from "@/components/Header/PopupMobileMenu";
 import LeftpanelDashboard from "@/components/Common/LeftpanelDashboard";
 import Modal from "@/components/Common/Modal";
 import TextGenerator from "@/components/TextGenerator/TextGenerator";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 const TextGeneratorPage = () => {
 
-  const router = useRouter(); 
-  const { data: session } = useSession();
-  if (!session) {
-    router.push("/signin");
-  }
+  setTimeout(async () => {
+    const session = await getSession(); 
+    if (!session) {
+      router.push("/signin");
+    }
+  }, 2000)
 
   const user_data = useSelector(state => state);
   console.log(user_data);
+
+  const dispatch = useDispatch();
+  const router = useRouter(); 
+
+  const fetchUserDetails = async () => {
+    dispatch({type: 'loading-user'}); 
+    const session_details = await getSession();   
+    try {
+         let res = await fetch('https://oneclickhuman.com/api_request/checkquota_test', {
+          mode:'cors', 
+          method: 'POST',
+          body: JSON.stringify({
+            'user_id' : session_details.user.user_id,
+          }),
+           headers: {
+             'Content-type': 'application/json; charset=UTF-8',
+           }
+         });
+  
+         let data = await res.json();
+  
+         console.log(data);
+         data.user_id = session_details.user.user_id;
+         data.user_email = session_details.user.user_email;
+         data.time = session_details.user.time;
+  
+         dispatch({type: 'loading-success', payload: data});
+    } catch (error) {
+         dispatch({type: 'request-failure'});
+    }
+  }
+
+  useEffect(() => {
+      fetchUserDetails();
+  }, [1])
   return (
     <>
       <main className="page-wrapper rbt-dashboard-page">
@@ -34,7 +71,9 @@ const TextGeneratorPage = () => {
               <div className="rbt-daynamic-page-content">
                 <div className="rbt-dashboard-content">
                   <div className="content-page">
-                    <TextGenerator userData={user_data}/>
+                    { !user_data.loading &&
+                      <TextGenerator userData={user_data}/>
+                    }
                   </div>
                 </div>
               </div>

@@ -47,7 +47,7 @@ const ProfileDetails = () => {
   async function cancelSubscription() {
     setCancelationStatus(null);
     try {
-      let res = await fetch('https://oneclickhuman.com/api_request/cancel_subscription', {
+      let res = await fetch('https://oneclickhuman.com/api_request/cancel_subscription_test', {
        mode:'cors', 
        method: 'POST',
        body: JSON.stringify({
@@ -59,7 +59,11 @@ const ProfileDetails = () => {
       });
 
       let data = await res.json();
-      setCancelationStatus(data.status);
+      if(data.status === 'redirect'){
+          openCustomerPanel();
+      }else{
+        setCancelationStatus(data.status);
+      }
  } catch (error) {
      console.log(error);
  }
@@ -163,19 +167,21 @@ const ProfileDetails = () => {
                      <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
                        <p className="plan-heading">Next Payment</p>
                        <p style={{fontSize: '20px', fontWeight: '500'}}>{account_status.subscription_renewal_date.split('T')[0]}</p>
-                       <div className="next-payment-row">
+                       <div className="btn-block">
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Update Payment Method</button>
                         <button className="btn-default btn-small round" onClick={() => cancelSubscription()}>Cancel Subscription</button>
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Invoice</button>
                        </div>
-                       <p>{cancelationStatus && cancelationStatus}</p>
+                       { cancelationStatus &&
+                         <p style={{marginBottom: '0px', marginTop: '20px'}}>{cancelationStatus}</p>
+                       }
                      </div>                   
                   }
                 </div>
               </div>
               
               <div className="chat-box-list">
-                <ProfileBody />
+                <ProfileBody user={account_status} />
               </div>
             </div>
           </div>

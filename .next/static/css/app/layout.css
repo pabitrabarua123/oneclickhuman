@@ -65639,6 +65639,15 @@ body.active-light-mode .rbt-utilize-area .rbt-default-sidebar-list li.has-submen
   border-radius: 10px 0 10px 0;
 }
 
+table.mytable {
+  border: 1px solid;
+}
+
+table.mytable td, table.mytable th {
+  border: 1px solid;
+  padding: 10px;
+}
+
 .inner.Collaborate-inner {
   padding: 0 50px 0 30px;
 }
@@ -67727,6 +67736,31 @@ div#popup p {
 .next-payment-row {
   display: flex;
   gap: 15px;
+}
+
+.btn-block button {
+  display: block;
+  margin-bottom: 20px;
+}
+
+#delete-popup {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#delete-popup-main {
+  background: #fff;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  width: 50%;
 }
 
 .rbt-modal-box {

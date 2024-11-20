@@ -1,8 +1,8 @@
 import UtilizePage from "./index";
 
 export const metadata = {
-  title: "How to use || ChatenAI - AI SaaS Website NEXTJS14 UI Kit",
-  description: "ChatenAI || ChatenAI - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Documentation - Oneclickhuman",
+  description: "",
 };
 
 const UtilizeLayout = () => {

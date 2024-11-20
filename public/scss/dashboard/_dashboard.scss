@@ -2243,3 +2243,25 @@ div#popup p {
     display: flex;
     gap: 15px;
 }
+.btn-block button {
+    display: block;
+    margin-bottom: 20px;
+}
+#delete-popup {
+    align-items: center;
+    background: rgba(0, 0, 0, .8);
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#delete-popup-main {
+    background: #fff;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    width: 50%;
+}

@@ -40,3 +40,10 @@
     border-radius: 10px 0 10px 0;
 }
 
+table.mytable {
+    border: 1px solid;
+}
+table.mytable td, table.mytable th {
+    border: 1px solid;
+    padding: 10px;
+}

@@ -1,15 +1,100 @@
 "use client";
 
 import React, { useState } from "react";
+import { signOut } from "next-auth/react";
 
-const ProfileBody = () => {
-  const [text, setText] = useState(
-    "My name is Fazlay Elahi Rainbow and I'm a Front-End Developer of #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences."
-  );
+const ProfileBody = ({user}) => {
+  
+  const [new_email, setNewEmail] = useState({ email: '', password: '', password_not_match: false, status: false });
+  const changeEmail = (e) => {
+    e.preventDefault();
+    setNewEmail({ ...new_email, password_not_match: false, status: false });
+ 
+     if(new_email.email === '' && new_email.password === ''){
+       alert('Please enter email and current password');
+       return;
+     }
+ 
+     fetch('https://oneclickhuman.com/api_request/change_email_test', {
+       mode:'cors', 
+       method: 'POST',
+       body: JSON.stringify({
+         'email' : new_email.email,
+         'password' : new_email.password,
+         'user_id' : user.user_id
+       }),
+       headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+       }
+     }).then(res => res.json())
+       .then((json) => {
+          //console.log(json);
+          if(json.status === 'failure' && json.password_matched === 'failure'){
+            setNewEmail({...new_email, password_not_match: true});
+          }else{
+            signOut({ callbackUrl: "/signin" });
+          }
+     });	
+ }
 
-  const handleChange = (event) => {
-    setText(event.target.value);
-  };
+ const [password_change, setPasswordChange] = useState({ current_password: '', new_password: '', cnf_password: '', password_not_match: false, status: false });
+ const changePassword = (e) => {
+     e.preventDefault();
+ 
+     setPasswordChange({ ...password_change, password_not_match: false, status: false });
+ 
+     if(password_change.new_password !== password_change.cnf_password){
+       alert('Current password and confirm password does not matched');
+         return;
+     }
+ 
+     fetch('https://oneclickhuman.com/api_request/change_password_test', {
+       mode:'cors', 
+       method: 'POST',
+       body: JSON.stringify({
+         'new_password' : password_change.new_password,
+         'current_password' : password_change.current_password,
+         'user_id' : user.user_id
+       }),
+       headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+       }
+     }).then(res => res.json())
+       .then((json) => {
+          //console.log(json);
+          if(json.status === 'failure' && json.password_matched === 'failure'){
+               setPasswordChange({...password_change, password_not_match: true});
+          }else{
+             signOut({ callbackUrl: "/signin" });
+          }
+     });
+ }
+
+ const [delete_acc_modal, setDeleteAccModal] = useState(false);
+ const [is_account_deleted, setAccountDeleted] = useState(false);
+ const deleteAccount = () => {
+  fetch('https://oneclickhuman.com/api_request/delete_account_test', {
+    mode:'cors', 
+    method: 'POST',
+    body: JSON.stringify({
+    'user_id' : user.user_id,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  }
+  }).then(res => res.json())
+    .then((json) => {
+    //console.log(json);
+     if(json.status === 'success') {
+         setDeleteAccModal(false);
+         setAccountDeleted(true);
+         setTimeout(() => {
+          signOut({ callbackUrl: "/" });
+         }, 3000);
+     }
+   });  
+  }
+
   return (
     <>
       <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
@@ -75,27 +160,36 @@ const ProfileBody = () => {
               <form
                 action="#"
                 className="rbt-profile-row rbt-default-form row row--15"
+                onSubmit={changeEmail}
               >
+                <div className="col-11 text-Center">
+                  <p className="mb--20">
+                    <strong>Note: </strong>You will be logged out after changing your account email address. You have to sign in with new credentials. Please note that you would not be able to sign with old email address anymore.
+                  </p>
+                </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="lastname">Email</label>
-                    <input id="lastname" type="text" defaultValue="Elahi" />
+                    <label htmlFor="lastname">New Email</label>
+                    <input id="lastname" type="text" defaultValue="New Email" onChange={(e) => setNewEmail({ ...new_email, email: e.target.value })}/>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="username">Password</label>
-                    <input id="username" type="password" defaultValue="Rainbow" />
+                    <input id="username" type="password" defaultValue="Password" onChange={(e) => setNewEmail({ ...new_email, password: e.target.value })}/>
                   </div>
                 </div>
 
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
+                    <button type="submit" className="btn-default">
                       Update Email
-                    </a>
+                    </button>
                   </div>
                 </div>
+                { new_email.password_not_match && 
+                  <p style={{marginTop: '12px'}}>Wrong Password</p>
+                }
               </form>
             </div>
 
@@ -108,7 +202,13 @@ const ProfileBody = () => {
               <form
                 action="#"
                 className="rbt-profile-row rbt-default-form row row--15"
+                onSubmit={changePassword}
               >
+                <div className="col-11 text-Center">
+                  <p className="mb--20">
+                    <strong>Note: </strong>You will be logged out after changing your account password. You have to sign in with new credentials. Please note that you would not be able to sign with old password anymore.
+                  </p>
+                </div>
                 <div className="col-12">
                   <div className="form-group">
                     <label htmlFor="currentpassword">Current Password</label>
@@ -116,6 +216,7 @@ const ProfileBody = () => {
                       id="currentpassword"
                       type="password"
                       placeholder="Current Password"
+                      onChange={(e) => setPasswordChange({ ...password_change, current_password: e.target.value })}
                     />
                   </div>
                 </div>
@@ -126,6 +227,7 @@ const ProfileBody = () => {
                       id="newpassword"
                       type="password"
                       placeholder="New Password"
+                      onChange={(e) => setPasswordChange({ ...password_change, new_password: e.target.value })}
                     />
                   </div>
                 </div>
@@ -138,16 +240,20 @@ const ProfileBody = () => {
                       id="retypenewpassword"
                       type="password"
                       placeholder="Re-type New Password"
+                      onChange={(e) => setPasswordChange({ ...password_change, cnf_password: e.target.value })}
                     />
                   </div>
                 </div>
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
+                    <button className="btn-default" type="submit">
                       Update Password
-                    </a>
+                    </button>
                   </div>
                 </div>
+                { password_change.password_not_match &&
+                  <p style={{marginTop: '12px'}}>Wrong Password</p>
+                }
               </form>
             </div>
 
@@ -164,35 +270,39 @@ const ProfileBody = () => {
                 <div className="col-11 text-Center">
                   <p className="mb--20">
                     <strong>Warning: </strong>Deleting your account will
-                    permanently erase all your data and cannot be reversed. This
-                    includes your profile, conversations, comments, and any
-                    other info linked to your account. Are you sure you want to
+                    permanently erase all your data and cannot be reversed. Are you sure you want to
                     go ahead with deleting your account? Enter your password to
                     confirm.
                   </p>
                 </div>
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="enterpassword">Your Password</label>
-                    <input
-                      id="enterpassword"
-                      type="password"
-                      placeholder="Current Password"
-                    />
-                  </div>
-                </div>
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
+                    <button className="btn-default" onClick={() => setDeleteAccModal(true)} type="button">
                       <i className="feather-trash-2"></i> Delete Accont
-                    </a>
+                    </button>
                   </div>
                 </div>
+                { is_account_deleted &&
+                  <p style={{marginTop: '12px'}}>Account deleted successfully</p>
+                }
               </form>
             </div>
           </div>
         </div>
       </div>
+      { delete_acc_modal &&
+            <div id="delete-popup">
+            <div id="delete-popup-main">
+             <div id="delete-popup-inner">
+               <p>Are you sure to delete your account?</p>
+               <div>
+                <button className="btn-default" onClick={() => setDeleteAccModal(false)}>Cancel</button>
+                <button className="btn-default" onClick={deleteAccount} style={{marginLeft: '20px'}}>Delete</button> 
+               </div>
+              </div>
+            </div>
+           </div>  
+      }
     </>
   );
 };
