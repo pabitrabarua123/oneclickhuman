@@ -17,7 +17,7 @@ const authenticateUser = async (email, password) => {
 
     const json = await response.json();
 
-    if (json.login === 'success' || json.login === 'on-verification') {
+    if (json.login === 'success') {
       return { 
         user_status : json.login, 
         user_id : json.id, 

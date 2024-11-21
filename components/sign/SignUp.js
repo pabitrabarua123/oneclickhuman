@@ -67,9 +67,9 @@ const SignUp = () => {
           setError("User already exists");
         }else{
           setAccountCreated(true);
-          setTimeout(() => {
-            router.push("/signin");   
-          }, 3000);
+          // setTimeout(() => {
+          //   router.push("/signin");   
+          // }, 3000);
         }
       } else {
         console.log("No session available");
@@ -172,7 +172,7 @@ const SignUp = () => {
                   </button>
                 </form>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                {account_created && <p style={{ color: "#fff" }}>Account Created, redirecting to signin...</p>}
+                {account_created && <p style={{ color: "#fff" }}>Account Created, please check your email and verify.</p>}
               </div>
               <div className="signup-box-footer">
                 <div className="bottom-text">
