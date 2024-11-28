@@ -1,5 +1,7 @@
 {
+  "/signin/page": "app/signin/page.js",
+  "/page": "app/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/developer/api/page": "app/developer/api/page.js"
+  "/humanizer/page": "app/humanizer/page.js",
+  "/pricing/page": "app/pricing/page.js"
 }

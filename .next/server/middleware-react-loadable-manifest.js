@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"components\\\\Home\\\\Home.js -> venobox/dist/venobox.min.js\":{\"id\":\"components\\\\Home\\\\Home.js -> venobox/dist/venobox.min.js\",\"files\":[\"static/chunks/_app-pages-browser_node_modules_venobox_dist_venobox_min_js.js\"]}}"

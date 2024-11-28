@@ -157,7 +157,7 @@ const PricingTwo = ({
                             parentClass={parentClass}
                             incresePrice={false}
                             monthlyPlan={userData.monthly_plan}
-                            subscrptionID={userData.subscrption_id}
+                            subscrptionID={userData.subscription_id}
                           />
                         ))}
                   </div>
