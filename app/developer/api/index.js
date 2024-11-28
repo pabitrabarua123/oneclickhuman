@@ -5,7 +5,7 @@ import StyleGuide from "@/components/StyleGuide/StyleGuide";
 import Footer from "@/components/Footer/Footer";
 import Copyright from "@/components/Footer/Copyright";
 import PopupMobileMenu from "@/components/Header/PopupMobileMenu";
-import HeaderTop from "@/components/Header/HeaderTop/Header-Top";
+import Header from "@/components/Header/Header";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 const StyleGuidepage = () => {
   return (
