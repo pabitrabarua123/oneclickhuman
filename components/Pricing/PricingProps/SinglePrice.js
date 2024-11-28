@@ -6,7 +6,7 @@ import sal from "sal.js";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
+const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan, subscrptionID }) => {
   useEffect(() => {
     sal();
 
@@ -79,7 +79,13 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan }) => {
                       <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Purchase</button>
                     }
                     { monthlyPlan > 0 &&
-                      <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Upgrade</button>
+                    <>
+                     { subscrptionID !== '' ?
+                       <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Upgrade</button>
+                       :
+                       <button className="btn-default btn-border" style={{display: 'inline-block'}} type="button" onClick={() => alert('Sorry your current plan can not be changed, please contact support.')}>Upgrade</button>
+                     }
+                    </>
                      }
                   </form>
                  </div>

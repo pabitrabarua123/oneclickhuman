@@ -18,12 +18,12 @@ export const Tool = ({userData}) => {
 
   const [has_subscription, setHaveSubscription] = useState(false);
   const [monthly_credits_exhausted, setMonthlyCreditsExhausted] = useState(false);
-  const [lifetime_exhausted, setLifeTimeExhausted] = useState(false);
-  const [monthly_onetime_credits_exhausted, setMonthlyOneTimeCreditsExhausted] = useState(false);
+ // const [lifetime_exhausted, setLifeTimeExhausted] = useState(false);
+  //const [monthly_onetime_credits_exhausted, setMonthlyOneTimeCreditsExhausted] = useState(false);
   const [showupdatebtn, setShowupdatebtn] = useState(false);
   const [CountWarning, setCountWarning] = useState(false);
   const [quota, setQuota] = useState({number: 0, plan: 0, text: '', tooltip: ''});
-  const [discount, setDiscount] = useState('');
+  //const [discount, setDiscount] = useState('');
   // quota to decresed -> 1 = free, 2 = monthly, 3 = onetime, 4 = lifetime
   const [quota_to_decresed, setQuotaToDecresed] = useState(1);
   const router = useRouter();
@@ -43,18 +43,14 @@ export const Tool = ({userData}) => {
              setQuotaToDecresed(2);
         }else if(userData.credits_availbe > 1000){
           setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
-          setLifeTimeExhausted(true);
+          //setLifeTimeExhausted(true);
           setQuotaToDecresed(2);
         }else if(userData.onetime_credit > 0){
            setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});
            setMonthlyCreditsExhausted(true);
            setQuotaToDecresed(3);
         }else{
-           setMonthlyOneTimeCreditsExhausted(true); 
-           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
-                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Word Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                setQuotaToDecresed(4);
-           }else{
+          // setMonthlyOneTimeCreditsExhausted(true); 
               if(userData.quota > 0){
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
                 setQuotaToDecresed(1);
@@ -62,7 +58,7 @@ export const Tool = ({userData}) => {
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
                 setShowupdatebtn(true);
               }
-           }
+           
       } 
    }else if(userData.subscrption_status === 1){
        setHaveSubscription(true);
@@ -72,10 +68,6 @@ export const Tool = ({userData}) => {
           setQuotaToDecresed(2);
         }else{
            setMonthlyCreditsExhausted(true); 
-           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
-                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                setQuotaToDecresed(4);
-           }else{
               if(userData.quota > 0){
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
                 setQuotaToDecresed(1);
@@ -83,18 +75,14 @@ export const Tool = ({userData}) => {
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize. Refills at 12:00 EST'});
                 setShowupdatebtn(true);
               }
-           }
+           
         }
    }else if(userData.onetime_plan > 0){
        if(userData.onetime_credit > 0){
             setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});    
             setQuotaToDecresed(3);
         }else{
-           setLifeTimeExhausted(true);
-           if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
-                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                setQuotaToDecresed(4);
-           }else{
+          // setLifeTimeExhausted(true);
               if(userData.quota > 0){
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
                 setQuotaToDecresed(1);
@@ -102,14 +90,9 @@ export const Tool = ({userData}) => {
                 setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
                 setShowupdatebtn(true);
               }
-           }
         }
    }else{
-      setDiscount('open');
-      if(userData.is_lifetime_active === 1 && lifetime_credits > 0){
-                setQuota({...quota, number: lifetime_credits, plan: userData.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                setQuotaToDecresed(4);
-      }else{
+      //setDiscount('open');
          if(userData.quota > 0){
           //console.log('hit here');
               setQuota({...quota, number: userData.quota, plan: 700, text: 'Daily Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
@@ -118,8 +101,7 @@ export const Tool = ({userData}) => {
              //console.log('hit here first time');
              setQuota({...quota, number: userData.quota, plan: 700, text: 'Balance - ', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'});
              setShowupdatebtn(true);
-          }
-      }
+          } 
    }
     }
   }, [userData])
@@ -344,7 +326,7 @@ export const Tool = ({userData}) => {
                   
            // Update quota at the start of paraphrasing
            if(msgCnt === 0 && mode.text === 'Premium Mode'){
-               fetch('https://oneclickhuman.com/api_request/updatequota', {
+               fetch('https://oneclickhuman.com/api_request/updatequota_test', {
                   mode:'cors', 
                   method: 'POST',
                   body: JSON.stringify({
@@ -357,26 +339,40 @@ export const Tool = ({userData}) => {
                   }
                }).then(res => res.json())
                  .then((json) => {
-                       setQuota({...quota, number: json.quota_decreased});
-                       //dispatch({type: ''});
+                     // quota to decresed -> 1 = free, 2 = monthly, 3 = onetime    
+                     setQuota({...quota, number: json.quota_decreased});
+                     switch (quota_to_decresed) {
+                      case 1:
+                        dispatch({type: 'quota-update-free', credits: json.quota_decreased});
+                        break;
+                      
+                      case 2:
+                        dispatch({type: 'quota-update-monthly', credits: json.quota_decreased});
+                        break;
+                        
+                      case 3:
+                        dispatch({type: 'quota-update-onetime', credits: json.quota_decreased});
+                        break;
+                     
+                      default:
+                        break;
+                     }
+                         
+                      //  if(json.quota_decreased > 0 && json.quota_decreased < 1000){
+                      //      if(quota_to_decresed === 2 && userData.onetime_credit > 0){
+                      //          setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                      //          setQuotaToDecresed(3);
+                      //      }
+                      //  }
                        
-                       if(json.quota_decreased > 0 && json.quota_decreased < 1000){
-                           if(quota_to_decresed === 2 && account_status.onetime_credit > 0){
-                               setQuota({...quota, number: account_status.onetime_credit, plan: account_status.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
-                               setQuotaToDecresed(3);
-                           }
-                       }
-  
+                       // when switching quota
                        if(json.quota_decreased === 0){
   
                             if(quota.plan !== 700){
                                  if(quota_to_decresed === 2){
-                                     if(account_status.onetime_credit > 0){
-                                         setQuota({...quota, number: account_status.onetime_credit, plan: account_status.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                                     if(userData.onetime_credit > 0){
+                                         setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
                                          setQuotaToDecresed(3); 
-                                     }else if(account_status.lifetime_credits > 0){
-                                        setQuota({...quota, number: account_status.lifetime_credits, plan: account_status.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                                        setQuotaToDecresed(4);
                                      }else{
                                         setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
                                         setQuotaToDecresed(1);
@@ -384,18 +380,9 @@ export const Tool = ({userData}) => {
                                      setMonthlyCreditsExhausted(true);
                                  }
                                  if(quota_to_decresed === 3){
-                                     if(account_status.lifetime_credits > 0){
-                                        setQuota({...quota, number: account_status.lifetime_credits, plan: account_status.lifetime_plan, text: 'Balance(LTD)', tooltip: 'Number of articles you can Humanize . Refills Monthly'});
-                                        setQuotaToDecresed(4);
-                                     }else{
                                        setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
                                        setQuotaToDecresed(1);
-                                     }
-                                     setLifeTimeExhausted(true);
-                                 }
-                                 if(quota_to_decresed === 4){
-                                     setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
-                                     setQuotaToDecresed(1);
+                                     //  setLifeTimeExhausted(true);
                                  }
                             }else{
                                setShowupdatebtn(true);
@@ -753,7 +740,7 @@ export const Tool = ({userData}) => {
              <div id="result" contentEditable={true} suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: paraphrasedText}} />
            </div>
            <div id="right-bottom">
-              <div>
+              <div style={{display: 'flex', width: '100%'}}>
                { mode.text !== 'Premium Mode' && TextBottomRight === true ?
                  <span id="TextBottomRight">Finding the tone too informal? Try <span onClick={() => changeMode('Premium Mode')}>Premium Mode</span></span>
                  : ''

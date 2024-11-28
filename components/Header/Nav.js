@@ -113,7 +113,7 @@ const Nav = () => {
           <Link href="https://oneclickhuman.com/blog">Blog</Link>
         </li>
         <li>
-          <Link href="/help">API</Link>
+          <Link href="/developer/api">API</Link>
         </li>
         { session ?
           <li>

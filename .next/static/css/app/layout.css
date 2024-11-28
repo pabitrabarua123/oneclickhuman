@@ -65648,6 +65648,39 @@ table.mytable td, table.mytable th {
   padding: 10px;
 }
 
+div#table-head {
+  display: flex;
+  border-top: 2px solid #9b9595;
+  border-bottom: 2px solid #9b9595;
+  padding-top: 5px;
+  padding-bottom: 6px;
+}
+
+div#table-head p {
+  width: 100%;
+  text-align: center;
+  margin: 7px 0 6px;
+}
+
+div#table-content {
+  display: flex;
+  border-bottom: 2px solid #9b9595;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+div#table-content p {
+  width: 100%;
+  font-size: 15px;
+  text-align: center;
+  margin: 7px 0 6px;
+}
+
+.success-left {
+  text-align: center;
+}
+
 .inner.Collaborate-inner {
   padding: 0 50px 0 30px;
 }
@@ -67450,20 +67483,23 @@ span.quota-col.tos span {
 
 div#right-bottom {
   bottom: 0;
-  float: left;
   padding: 10px;
   position: absolute;
+  width: 50%;
 }
 
-div#right-bottom span {
-  float: right;
-  margin-left: 6px;
+span#TextBottomRight {
+  width: 100%;
   font-size: 13px;
-  cursor: pointer;
 }
 
 div#right-bottom .tooltip {
   opacity: 1;
+  width: 40px;
+}
+
+div#right-bottom .tooltip .tooltiptext {
+  margin-left: -81px;
 }
 
 #result-warpper {
@@ -67472,7 +67508,7 @@ div#right-bottom .tooltip {
 
 div#result {
   margin-bottom: 0;
-  height: calc(100vh - 330px);
+  height: calc(100vh - 270px);
   overflow-y: scroll;
   padding: 0 20px 0 25px;
   width: calc(100% + 20px);
@@ -67763,6 +67799,36 @@ div#popup p {
   width: 50%;
 }
 
+@media only screen and (max-width: 991px) {
+  div#left-column, div#right-column {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    border-right: unset;
+  }
+  .rbt-dashboard-content .content-page .chat-box-list {
+    overflow-y: auto;
+    max-height: unset;
+  }
+  div#right-bottom {
+    bottom: 0;
+    padding: 10px;
+    position: static;
+    height: 45px;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  div#bottom-left {
+    display: block;
+  }
+  span#quota {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  button#paraphrase {
+    width: 100%;
+  }
+}
 .rbt-modal-box {
   transition: all 0.3s ease;
 }

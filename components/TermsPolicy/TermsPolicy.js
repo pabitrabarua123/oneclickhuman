@@ -9,92 +9,45 @@ const TermsPolicy = () => {
           <div className="rbt-dashboard-content">
             <div className="banner-area">
               <div className="settings-area">
-                <h3 className="title">Terms And Condition</h3>
+                <h3 className="title">Terms of Service</h3>
               </div>
             </div>
             <div className="content-page pb--50">
               <div className="chat-box-list">
                 <div className="content">
-                  <h4>Welcome to ChatenAI Privacy Policy</h4>
-                  <ol>
-                    <li>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur (the “Sites”).
-                    </li>
-                    <li>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam, eaque ipsa quae ab illo inventore veritatis et
-                      quasi architecto beatae vitae dicta sunt explicabo.
-                    </li>
-                    <li>
-                      Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                      aut odit aut fugit, sed quia consequuntur magni dolores
-                      eos qui ratione voluptatem sequi nesciunt. Neque porro
-                      quisquam est, qui dolorem ipsum quia dolor sit amet,
-                      consectetur, adipisci velit, sed quia non numquam eius
-                      modi tempora incidunt ut labore et dolore magnam aliquam
-                      quaerat voluptatem.
-                    </li>
-                  </ol>
+                  <h4>1. Acceptance of Terms</h4>
+                  <p>By using the services provided by Oneclickhuman.com (“the Service”), you agree to be bound by the following Terms of Service ("TOS"). If you do not agree to these terms, you may not access or use the Service.</p>
 
-                  <h4>The type of personal information we collect</h4>
+                  <h4>2. Description of Service</h4>
+                  <p>Oneclickhuman.com is a tool that converts refines AI-generated content to make it better and sound as natural as human content.</p>
 
-                  <ol>
-                    <li>
-                      We collect certain personal information about visitors and
-                      users of our Sites.{" "}
-                      <Link href="http://rainbowit.net/themes/imroz">
-                        http://rainbowit.net/themes/imroz
-                      </Link>
-                    </li>
-                    <li>
-                      Ut enim ad minima veniam, quis nostrum exercitationem
-                      ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
-                      commodi consequatur? Quis autem vel eum iure reprehenderit
-                      qui in ea voluptate velit esse quam nihil molestiae
-                      consequatur, vel illum qui dolorem eum fugiat quo voluptas
-                      nulla pariatur.
-                    </li>
-                  </ol>
+                  <h4>3. User Obligations</h4>
+                  <p>By using the Service, you agree to: Not reproduce, duplicate, copy, sell, or exploit any portion of the Service without explicit permission.</p>
 
-                  <h4>How we collect personal information</h4>
+                  <h4>4. Intellectual Property</h4>
+                  <p>The Service and its original content, features, and functionality are owned by Oneclickhuman.com and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
 
-                  <ol>
-                    <li>
-                      I must explain to you how all this mistaken idea of
-                      denouncing pleasure and praising pain was born and I will
-                      give you a complete account of the system, and expound the
-                      actual teachings.
-                    </li>
-                    <li>
-                      At vero eos et accusamus et iusto odio dignissimos ducimus
-                      qui blanditiis praesentium voluptatum deleniti atque
-                      corrupti quos dolores et quas molestias excepturi sint
-                      occaecati cupiditate non provident similique sunt in culpa
-                      qui officia deserunt mollitia animi, id est laborum et
-                      dolorum fuga.
-                    </li>
-                    <li>
-                      On the other hand, we denounce with righteous indignation
-                      and dislike men who are so beguiled and demoralized by the
-                      charms of pleasure of the moment, so blinded by desire,
-                      that they cannot foresee the pain and trouble that are
-                      bound to ensue; and equal blame belongs to those who fail
-                      in their duty through weakness of will, which is the same
-                      as saying through shrinking from toil and pain. These
-                      cases are perfectly simple and easy to distinguish. In a
-                      free hour, when our power of choice is untrammelled and
-                      when nothing prevents our being able to do what we like
-                      best, every pleasure is to be welcomed and every pain
-                      avoided. But in certain circumstances and owing to the
-                      claims of duty or the obligations{" "}
-                    </li>
-                  </ol>
+                  <h4>5. Termination</h4>
+                  <p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including, without limitation, if you breach the TOS.</p>
+
+                  <h4>6. Limitation of Liability</h4>
+                  <p>To the fullest extent permitted by law, Oneclickhuman.com shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill or other intangible losses resulting from (a) your use or inability to use the Service; (b) any unauthorized access to or use of our servers and/or any personal information stored therein.</p>
+
+                  <h4>7. Changes to TOS</h4>
+                  <p>Oneclickhuman.com reserves the right to update or change the TOS at any time without notice. Your continued use of the Service after any modifications to the TOS will constitute your agreement to be bound by the modified TOS.</p>
+
+                  <h4>8. Governing Law</h4>
+                  <p>These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+
+                  <h4>9. Contact Information</h4>
+                  <p>For any questions regarding this TOS or the Service, please contact info@oneclickhuman.com. Prohibition of Plagiarism and Academic Misconduct</p>
+
+                  <h4>10. Use for Ethical and Lawful Purposes</h4>
+                  <p>Users of Oneclickhuman.com agree to utilize the Service in an ethical manner. Specifically: a. No Plagiarism: Users shall not use the Service to generate or produce content that plagiarizes or infringes upon the intellectual property rights of any third party, including copyrights, trademarks, or other proprietary rights. Users are responsible for ensuring that the content they generate using the Service is original and does not replicate existing materials in a manner that constitutes plagiarism. b. No Academic Misconduct: Users are prohibited from using the Service to engage in any form of academic misconduct, including but not limited to submitting any content generated by the Service as their own original work for academic credit, evaluation, or any other academic purpose. It is the user's responsibility to abide by the academic integrity policies of their respective educational institutions.</p>
+
+                  <h4>11. Consequences for Misuse</h4>
+                  <p> Any misuse of the Service, including generating plagiarized content or engaging in academic misconduct, can result in immediate termination of access to the Service, at the discretion of Oneclickhuman.com. Furthermore, users found in violation may be subject to other legal or academic consequences.</p>
+
                 </div>
               </div>
             </div>

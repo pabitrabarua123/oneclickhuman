@@ -9,7 +9,7 @@ import { useAppContext } from "@/context/Context";
 import logo from "../../public/images/logo/logo.png";
 import logoDark from "../../public/images/logo/logo-dark.png";
 
-import ToolsData from "../../data/header.json";
+//import ToolsData from "../../data/header.json";
 
 import Nav from "./Nav";
 //import GridMenu from "./GridMenu";

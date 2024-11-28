@@ -16,7 +16,7 @@ const ProfileDetails = () => {
       <div className="rbt-daynamic-page-content center-width">
         <div className="rbt-dashboard-content">
           <br></br>
-           <p>Unauthorized access</p>
+           <p>Unauthorized access, please <a style={{textDecoration: 'underline'}} href='/signin'>login</a> first</p>
           </div>
           </div>
           </div>

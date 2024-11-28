@@ -2,13 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import sal from "sal.js";
-
-import PricingData from "../../data/home.json";
 import SinglePrice from "./PricingProps/SinglePrice";
 import OnetimePrice from "./PricingProps/OnetimePrice";
 //import Compare from "./Compare";
 import FreeItem from "./PricingProps/FreeItem";
-import { useSelector } from "react-redux";
 
 const PricingTwo = ({
   parentClass,
@@ -17,6 +14,7 @@ const PricingTwo = ({
   end,
   isHeading,
   gap,
+  userData
 }) => {
   useEffect(() => {
     sal();
@@ -33,8 +31,6 @@ const PricingTwo = ({
       };
     });
   }, []);
-
-  const monthlyPlan = useSelector(state => state.monthly_plan);
 
   const [products, setProducts] = useState([]);
   const [products_onetime, setProductsOnetime] = useState([]);
@@ -160,7 +156,8 @@ const PricingTwo = ({
                             key={index}
                             parentClass={parentClass}
                             incresePrice={false}
-                            monthlyPlan={monthlyPlan}
+                            monthlyPlan={userData.monthly_plan}
+                            subscrptionID={userData.subscrption_id}
                           />
                         ))}
                   </div>

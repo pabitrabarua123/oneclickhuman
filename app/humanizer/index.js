@@ -21,12 +21,13 @@ const TextGeneratorPage = () => {
   }, 2000)
 
   const user_data = useSelector(state => state);
-  console.log(user_data);
+  //console.log(user_data);
 
   const dispatch = useDispatch();
   const router = useRouter(); 
 
   const fetchUserDetails = async () => {
+    console.log('request sending....');
     dispatch({type: 'loading-user'}); 
     const session_details = await getSession();   
     try {
@@ -55,8 +56,11 @@ const TextGeneratorPage = () => {
   }
 
   useEffect(() => {
-      fetchUserDetails();
-  }, [1])
+    if(!user_data.user_id){
+         fetchUserDetails();
+    }
+  }, [1]);
+  
   return (
     <>
       <main className="page-wrapper rbt-dashboard-page">

@@ -12,6 +12,7 @@ const accountInfo = {
     current_date : null, 
     credits_availbe : null, 
     subscrption_status : null, 
+    subscrption_id : null, 
     cancellation_status : null, 
     onetime_credit : null, 
     onetime_plan : null, 
@@ -47,6 +48,7 @@ const accountReducer = (state = accountInfo, action) => {
         current_date : action.payload.current_date, 
         credits_availbe : action.payload.credits_availbe, 
         subscrption_status : action.payload.subscrption_status, 
+        subscrption_id: action.payload.subscrption_id,
         cancellation_status : action.payload.cancellation_status, 
         onetime_credit : action.payload.onetime_credit, 
         onetime_plan : action.payload.onetime_plan, 
@@ -66,10 +68,13 @@ const accountReducer = (state = accountInfo, action) => {
     };
 
     case 'quota-update-monthly':
-      return {...state, credits_availbe: action.quota};
+      return {...state, credits_availbe: action.credits};
 
     case 'quota-update-onetime':
-      return {...state, onetime_credit: action.quota};  
+      return {...state, onetime_credit: action.credits};  
+
+    case 'quota-update-free':
+      return {...state, quota: action.credits};    
 
     default: 
       return state;

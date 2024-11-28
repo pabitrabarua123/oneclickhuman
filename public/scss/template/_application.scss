@@ -47,3 +47,31 @@ table.mytable td, table.mytable th {
     border: 1px solid;
     padding: 10px;
 }
+div#table-head {
+    display: flex;
+    border-top: 2px solid #9b9595;
+    border-bottom: 2px solid #9b9595;
+    padding-top: 5px;
+    padding-bottom: 6px;
+}
+div#table-head p {
+    width: 100%;
+    text-align: center;
+    margin: 7px 0 6px;
+}
+div#table-content {
+    display: flex;
+    border-bottom: 2px solid #9b9595;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+div#table-content p {
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+    margin: 7px 0 6px;
+}
+.success-left {
+    text-align: center;
+}
