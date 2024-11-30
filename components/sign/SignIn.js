@@ -144,7 +144,7 @@ const handleSubmit = async (e) => {
                     />
                   </div>
                   <div className="forget-text">
-                    <Link className="btn-read-more" href="#">
+                    <Link className="btn-read-more" href="/forgotPassword">
                       <span>Forgot password</span>
                     </Link>
                   </div>
