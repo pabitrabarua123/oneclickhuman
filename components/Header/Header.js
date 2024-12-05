@@ -51,10 +51,9 @@ const Header = ({ headerTransparent, headerSticky, btnClass }) => {
                 <Link href="/">
                   <Image
                     className={isLightTheme ? "logo-light" : "logo-dark"}
-                    src={isLightTheme ? logo : logoDark}
-                    width={201}
-                    height={35}
-                    alt="ChatBot Logo"
+                    src={isLightTheme ? logo : logo}
+                    alt="Logo"
+                    width="240"
                   />
                 </Link>
               </div>

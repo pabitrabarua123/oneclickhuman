@@ -28,7 +28,7 @@ const accountInfo = {
     max_lifetime_used : null, 
     quota_used : null, 
     currency : null, 
-    role : null
+    role : 0
 }
 
 const accountReducer = (state = accountInfo, action) => {

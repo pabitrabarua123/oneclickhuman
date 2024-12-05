@@ -35,13 +35,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px 20px;
-            .logo {
-                a {
-                    img {
-                        max-height: 30px;
-                    }
-                }
-            }
+
             .close-menu {
                 .close-button {
                     background: var(--color-primary);

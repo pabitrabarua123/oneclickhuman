@@ -23,6 +23,7 @@ const authenticateUser = async (email, password) => {
         user_id : json.id, 
         time : json.time, 
         user_email : json.user_email,
+        role : json.role,
       };
     } else {
       return null;
@@ -104,6 +105,7 @@ export const authOptions = {
         token.user_id = user.user_id;  
         token.user_email = user.user_email; 
         token.time = user.time;
+        token.role = user.role;
       }
       return token;
     },
@@ -113,7 +115,8 @@ export const authOptions = {
       session.user.user_status = token.user_status; 
       session.user.user_id = token.user_id;
       session.user.user_email = token.user_email; 
-      session.user.time = token.time;  
+      session.user.time = token.time;
+      session.user.role = token.role;  
 
       return session;
     },
