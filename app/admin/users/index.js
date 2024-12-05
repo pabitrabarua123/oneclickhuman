@@ -7,7 +7,7 @@ import LeftpanelDashboardAdmin from "@/components/Common/LeftpanelDashboardAdmin
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Users from "@/components/Admin/Users";
 
 const Admin = () => {
