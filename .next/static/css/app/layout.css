@@ -67273,6 +67273,10 @@ button#paraphrase {
   width: 120px;
 }
 
+div#content-generator button#paraphrase {
+  width: 190px;
+}
+
 /******tooltip*******/
 .tooltip {
   position: relative;
@@ -67455,6 +67459,14 @@ span.quota-col:nth-child(2) {
   width: 22%;
 }
 
+div#content-generator span.quota-col:first-child {
+  width: 40%;
+}
+
+div#content-generator span.quota-col:nth-child(2) {
+  width: 35%;
+}
+
 span.quota-col:nth-child(3) {
   width: 40%;
 }
@@ -67476,6 +67488,21 @@ div#right-bottom {
   padding: 10px;
   position: absolute;
   width: 50%;
+}
+
+div#content-generator div#right-bottom {
+  bottom: 0;
+  padding: 10px;
+  position: static;
+  width: 50%;
+}
+
+div#content-generator div#result {
+  margin-bottom: 0;
+  height: calc(100vh - 350px);
+  overflow-y: scroll;
+  padding: 0 20px 0 25px;
+  width: calc(100% + 20px);
 }
 
 span#TextBottomRight {
@@ -67880,6 +67907,14 @@ div#userModal input[type=date] {
 .setting_section input[type=text] {
   border-radius: 4px;
   height: 40px;
+}
+
+div#content-generator div#tool select {
+  background: transparent;
+}
+
+div#content-generator .form-group label {
+  margin-bottom: 7px;
 }
 
 .rbt-modal-box {
