@@ -2007,7 +2007,7 @@ div#content-generator div#right-bottom {
 }
 div#content-generator div#result {
     margin-bottom: 0;
-    height: calc(100vh - 350px);
+    height: calc(100vh - 240px);
     overflow-y: scroll;
     padding: 0 20px 0 25px;
     width: calc(100% + 20px);
@@ -2386,4 +2386,29 @@ div#content-generator div#tool select {
 div#content-generator .form-group label {
     margin-bottom: 7px;
 }
-  
+.rbt-left-panel .rbt-default-sidebar .rbt-default-sidebar-wrapper {
+    height: calc(100vh - 275px);
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+div#content-generator div#InputWrapper {
+    height: calc(100vh - 240px);
+}
+div#content-generator div#right-bottom .tooltip .tooltiptext {
+    margin-left: -64px;
+}
+
+div#content-generator div#result h1 {
+    font-size: 25px;
+} 
+div#content-generator div#result h2 {
+    font-size: 23px;
+}
+div#content-generator div#result h3 {
+    font-size: 20px;
+}
+div#content-generator div#result h4 {
+    font-size: 18px;
+}  

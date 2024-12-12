@@ -14,6 +14,7 @@ import logoDark from "../../public/images/logo/logo-dark.png";
 import Nav from "./Nav";
 //import GridMenu from "./GridMenu";
 import DarkSwitch from "./dark-switch";
+import { getSession } from "next-auth/react";
 
 const Header = ({ headerTransparent, headerSticky, btnClass }) => {
   const { activeMobileMenu, setActiveMobileMenu, isLightTheme, toggleTheme } =
@@ -36,6 +37,20 @@ const Header = ({ headerTransparent, headerSticky, btnClass }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+const [getStartedBtnText, setGetStartedBtnText] = useState(false);  
+useEffect(() => {
+  async function getWebSession(){
+    let session = await getSession();
+    if(session){
+        setGetStartedBtnText(false);
+    }else{
+       setGetStartedBtnText(true);
+    }
+  }
+  getWebSession();
+}, [1]);
+
   return (
     <>
       <DarkSwitch isLight={isLightTheme} switchTheme={toggleTheme} />
@@ -65,12 +80,14 @@ const Header = ({ headerTransparent, headerSticky, btnClass }) => {
                 </nav>
 
                 <div className="header-btn">
-                  <Link
-                    className={`btn-default ${btnClass}`}
-                    href="/humanizer"
-                  >
-                    Get Started Free
-                  </Link>
+                  { getStartedBtnText && 
+                    <Link
+                      className={`btn-default ${btnClass}`}
+                      href="/humanizer"
+                    >
+                    Humanizer  
+                    </Link> 
+                  }
                 </div>
 
                 {/* <GridMenu ToolsData={ToolsData} /> */}

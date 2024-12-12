@@ -85,7 +85,7 @@ const PricingTwo = ({
                         <span className="theme-gradient">Pricing</span>
                       </h4>
                       <h2 className="title w-600 mb--20">
-                       Humanizing your article in resonable price
+                      Humanizing your Articles at a Reasonable Price
                       </h2>
                       <p className="description b1">
                       Custom Plan - Contact Us for even higher requirements 

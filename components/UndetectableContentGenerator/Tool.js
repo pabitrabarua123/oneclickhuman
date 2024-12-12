@@ -195,80 +195,79 @@ export const Tool = ({userData}) => {
                   source = new EventSource("https://oneclickhuman.com/api_request/completion_content_generator/" + promptId);
                   source.onmessage = function(event) {
                   var dt = JSON.parse(event.data);
-                  
-           // Update quota at the start of paraphrasing
-           if(msgCnt === 0){
-               fetch('https://oneclickhuman.com/api_request/updatequota_test', {
-                  mode:'cors', 
-                  method: 'POST',
-                  body: JSON.stringify({
-                    'user_id' : userData.user_id,
-                    'quota_to_decresed': quota_to_decresed,
-                    'decreased_words': words,
-                  }),
-                  headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                  }
-               }).then(res => res.json())
-                 .then((json) => {
-                     // quota to decresed -> 1 = free, 2 = monthly, 3 = onetime    
-                     setQuota({...quota, number: json.quota_decreased});
-                     switch (quota_to_decresed) {
-                      case 1:
-                        dispatch({type: 'quota-update-free', credits: json.quota_decreased});
-                        break;
-                      
-                      case 2:
-                        dispatch({type: 'quota-update-monthly', credits: json.quota_decreased});
-                        break;
-                        
-                      case 3:
-                        dispatch({type: 'quota-update-onetime', credits: json.quota_decreased});
-                        break;
-                     
-                      default:
-                        break;
-                     }
-                         
-                      //  if(json.quota_decreased > 0 && json.quota_decreased < 1000){
-                      //      if(quota_to_decresed === 2 && userData.onetime_credit > 0){
-                      //          setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
-                      //          setQuotaToDecresed(3);
-                      //      }
-                      //  }
-                       
-                       // when switching quota
-                       if(json.quota_decreased === 0){
-  
-                            if(quota.plan !== 700){
-                                 if(quota_to_decresed === 2){
-                                     if(userData.onetime_credit > 0){
-                                         setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
-                                         setQuotaToDecresed(3); 
-                                     }else{
-                                        setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
-                                        setQuotaToDecresed(1);
-                                     }
-                                     setMonthlyCreditsExhausted(true);
-                                 }
-                                 if(quota_to_decresed === 3){
-                                       setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
-                                       setQuotaToDecresed(1);
-                                     //  setLifeTimeExhausted(true);
-                                 }
-                            }else{
-                               setShowupdatebtn(true);
-                            } 
-                       }
-                  });
-          }
   
       // When conversion is completed
       if (dt.msg === '[DONE]') {
            source.close();
           
            setParaphrasedText(outputRes);
-  
+           let word_output_count = getCount(outputRes);
+           console.log("Word count is: " + word_output_count);
+
+           fetch('https://oneclickhuman.com/api_request/updatequota_test', {
+            mode:'cors', 
+            method: 'POST',
+            body: JSON.stringify({
+              'user_id' : userData.user_id,
+              'quota_to_decresed': quota_to_decresed,
+              'decreased_words': word_output_count,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            }
+         }).then(res => res.json())
+           .then((json) => {
+               // quota to decresed -> 1 = free, 2 = monthly, 3 = onetime    
+               setQuota({...quota, number: json.quota_decreased});
+               switch (quota_to_decresed) {
+                case 1:
+                  dispatch({type: 'quota-update-free', credits: json.quota_decreased});
+                  break;
+                
+                case 2:
+                  dispatch({type: 'quota-update-monthly', credits: json.quota_decreased});
+                  break;
+                  
+                case 3:
+                  dispatch({type: 'quota-update-onetime', credits: json.quota_decreased});
+                  break;
+               
+                default:
+                  break;
+               }
+                   
+                //  if(json.quota_decreased > 0 && json.quota_decreased < 1000){
+                //      if(quota_to_decresed === 2 && userData.onetime_credit > 0){
+                //          setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                //          setQuotaToDecresed(3);
+                //      }
+                //  }
+                 
+                 // when switching quota
+                 if(json.quota_decreased === 0){
+
+                      if(quota.plan !== 700){
+                           if(quota_to_decresed === 2){
+                               if(userData.onetime_credit > 0){
+                                   setQuota({...quota, number: userData.onetime_credit, plan: userData.onetime_plan, text: 'Onetime Balance', tooltip: 'Number of Articles you can Humanize. Lifetime Validity'});        
+                                   setQuotaToDecresed(3); 
+                               }else{
+                                  setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
+                                  setQuotaToDecresed(1);
+                               }
+                               setMonthlyCreditsExhausted(true);
+                           }
+                           if(quota_to_decresed === 3){
+                                 setQuota({...quota, number: 700, plan: 3, text: 'Daily Word Balance', tooltip: 'Number of articles you can Humanize . Refills at 12:00 EST'}); 
+                                 setQuotaToDecresed(1);
+                               //  setLifeTimeExhausted(true);
+                           }
+                      }else{
+                         setShowupdatebtn(true);
+                      } 
+                 }
+            });
+
            document.getElementById("paraphrase").disabled = false; 
            setRequestProcess(0);
   
@@ -442,14 +441,9 @@ export const Tool = ({userData}) => {
     document.execCommand("copy");
     selection.removeAllRanges();
     toast("Result Copied!", {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: true,
-      theme: "dark",
+        position: "bottom-right",
+        autoClose: 2000,
+        theme: "dark",
       });
   }
   const copyContent = () =>{
@@ -503,11 +497,11 @@ export const Tool = ({userData}) => {
                  onClick={() => router.push('/pricing')}
                  >
                  Upgrade
-                </span> to remove Word limit & improve conversion quality
+                </span> to get more word balance & improve quality
              </p>
               : ''
             }
-             <span id="quota">
+             <span id="quota" style={{marginLeft: '12px'}}>
                <span className="quota-col">
                  <span>{quota.text} {showupdatebtn === true ? <>{quota.number}</> : '' }</span> <br></br>
                  { showupdatebtn === true ?
@@ -524,7 +518,7 @@ export const Tool = ({userData}) => {
                </span>
               
  
-               <span className="quota-col">
+               {/* <span className="quota-col">
                  <span>Words</span><br></br>
                  <span id="word-count">
                  <b>{words}/{quota.plan === 700 ? free_word_limit : '1500'}</b>
@@ -535,7 +529,7 @@ export const Tool = ({userData}) => {
                    : ''
                   }
                  </span>
-               </span>
+               </span> */}
              </span>
              <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Generate Article'}</span></button>
         </div>
@@ -548,7 +542,7 @@ export const Tool = ({userData}) => {
              <div id="result" contentEditable={true} suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: paraphrasedText}} />
            </div>
            <div id="right-bottom">
-              <div style={{display: 'flex', width: '100%'}}>
+              <div style={{display: 'flex', width: '100%', marginTop: '20px'}}>
                 <span className="tooltip" onClick={copyContent}><i className="feather-copy"></i><span className="tooltiptext">Copy</span></span>
               </div>
              </div>

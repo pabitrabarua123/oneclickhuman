@@ -23,7 +23,7 @@ const SignInPage = () => {
 
           <ForgotPass />
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

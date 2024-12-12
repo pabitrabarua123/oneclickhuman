@@ -1,8 +1,8 @@
 import SignInPage from "./index";
 
 export const metadata = {
-  title: "SingIn || ChatenAI - AI SaaS Website NEXTJS14 UI Kit",
-  description: "ChatenAI || ChatenAI - AI SaaS Website NEXTJS14 UI Kit",
+  title: "SingIn || Oneclickhuman",
+  description: "",
 };
 
 const SingInLayout = () => {

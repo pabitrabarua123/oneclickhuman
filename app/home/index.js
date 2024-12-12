@@ -96,7 +96,7 @@ const HomePage = () => {
           <Separator top={true} />
           <Accordion isHead={true} />
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

@@ -23,7 +23,7 @@ const SignUpPage = () => {
 
           <SignUp />
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

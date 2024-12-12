@@ -28,7 +28,7 @@ const UtilizePage = () => {
           <Utilize />
 
           <BackToTop />
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

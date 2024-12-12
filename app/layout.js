@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <ReduxProvider>
             {children}
-            <ToastContainer />
+            <ToastContainer autoClose={2000}/>
           </ReduxProvider>
         </SessionProvider>
       </body>

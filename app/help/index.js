@@ -29,7 +29,7 @@ const HelpPage = () => {
           <Help />
 
           <BackToTop />
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

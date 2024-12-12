@@ -12,12 +12,15 @@ import UserMenuItems from "../Header/HeaderProps/UserMenuItems";
 
 import HeaderData from "../../data/header.json";
 import { useAppContext } from "@/context/Context";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const LeftpanelDashboard = () => {
   const pathname = usePathname();
   const { shouldCollapseLeftbar, isLightTheme, toggleTheme } = useAppContext();
 
   const isActive = (href) => pathname.startsWith(href);
+  const current_state =  useSelector(state => state);
 
   return (
     <>
@@ -34,11 +37,20 @@ const LeftpanelDashboard = () => {
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     <li>
                       <Link
-                        className={isActive("/plans-billing") ? "active" : ""}
+                        className={isActive("/pricing") ? "active" : ""}
                         href="/pricing"
                       >
                         <i className="feather-briefcase"></i>
                         <span>Manage Subscription</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={isActive("/account") ? "active" : ""}
+                        href="/account"
+                      >
+                        <i className="feather-briefcase"></i>
+                        <span>My Account</span>
                       </Link>
                     </li>
                   </ul>
@@ -67,9 +79,9 @@ const LeftpanelDashboard = () => {
                       ))}
                   </ul>
                 </nav>
-
                 <div className="rbt-sm-separator"></div>
-
+             
+             {/* 
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     <li className="has-submenu">
@@ -89,36 +101,24 @@ const LeftpanelDashboard = () => {
                       </div>
                     </li>
                   </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
+                </nav> */}
 
-          <div className="subscription-box">
-            <div className="inner">
-              {/* <Link href="/profile-details" className="autor-info">
-                <div className="author-img active">
-                  <Image
-                    className="w-100"
-                    width={40}
-                    height={40}
-                    src={avatar}
-                    alt="Author"
-                  />
-                </div>
-                <div className="author-desc">
-                  <h6>RainbowIT Dev</h6>
-                  <p>trentadam@net</p>
-                </div>
-                <div className="author-badge">Free</div>
-              </Link> */}
-              <div className="btn-part">
-                <Link href="/pricing" className="btn-default btn-border">
-                  Upgrade To Pro
-                </Link>
               </div>
             </div>
           </div>
+          { current_state.subscrption_status === 1 || current_state.onetime_plan === 1 ? ''
+            :
+            <div className="subscription-box">
+              <div className="inner">
+                <div className="btn-part">
+                  <Link href="/pricing" className="btn-default btn-border">
+                    Upgrade To Pro
+                  </Link>
+                </div>
+             </div>
+            </div>
+          }
+
           <div className="switcher-btn-gr inner-switcher">
             <button
               className={`${isLightTheme ? "active" : ""}`}

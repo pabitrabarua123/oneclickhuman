@@ -39,7 +39,7 @@ const SuccessPage = () => {
           setIsSubscriptionPlan(false);
        }
   
-      // fetch('https://oneclickhuman.com/api_request/update_payment_react_test', {
+      // fetch('https://oneclickhuman.com/api_request/update_payment_react', {
       //   mode:'cors', 
       //   method: 'POST',
       //   body: JSON.stringify({
@@ -112,7 +112,7 @@ const SuccessPage = () => {
         </div>
       </div>
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

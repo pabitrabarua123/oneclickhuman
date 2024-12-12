@@ -76,7 +76,7 @@ const PricingPage = () => {
             userData={userData}
           />
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

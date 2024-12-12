@@ -22,7 +22,7 @@ const StyleGuidepage = () => {
 
           <StyleGuide />
 
-          <Footer />
+          {/* <Footer /> */}
           <Copyright />
         </Context>
       </main>

@@ -664,7 +664,7 @@ export const Tool = ({userData}) => {
                   <div id="placeholder" onClick={() => setPlaceHolder(false)}>
                     <h4>Insert your AI content here to make it Undetectable</h4> 
                     <br></br>You can add content directly from any AI tool, no need to process it or do anything, this tool will not only humanize the content but also make it sound better.
-                    <br></br><br></br>Press the button "Make it Human" after pasting or writing the content 
+                    <br></br> 
               </div> 
               : '' 
                 }
