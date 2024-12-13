@@ -1712,6 +1712,7 @@ span#tooltip-reset {
     opacity: 1;
     margin-left: 19px;
     font-size: 15px;
+    z-index: unset;
 }
     span#mode-dropdown, span#language-dropdown {
         display: block;
@@ -2412,3 +2413,6 @@ div#content-generator div#result h3 {
 div#content-generator div#result h4 {
     font-size: 18px;
 }  
+.mybtn {
+    font-size: 13px !important;
+}

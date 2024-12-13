@@ -275,7 +275,7 @@ export const Tool = ({userData}) => {
     }
     //return;
   
-  fetch('https://oneclickhuman.com/api_request/checkquota', {
+  fetch('https://oneclickhuman.com/api_request/checkquota_test', {
          mode:'cors', 
          method: 'POST',
            body: JSON.stringify({
@@ -288,7 +288,7 @@ export const Tool = ({userData}) => {
          .then((json) => {
   
             if(json.quota > 0 || json.credits_availbe > 0 || json.onetime_credit > 0 || mode.text === 'Lightning Mode') {
-                
+                console.log("Paraphrase details: quota: " + json.quota + ", credits_availbe: " + json.credits_availbe + " onetime_credit: " + json.onetime_credit);
                 let paid_user = false;
                 if(json.credits_availbe > 0 || json.onetime_credit > 0 || mode.text === 'Lightning Mode'){
                     paid_user = true;

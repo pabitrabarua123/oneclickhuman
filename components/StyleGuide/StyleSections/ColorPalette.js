@@ -1,22 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { useSelector } from 'react-redux';
-import { useRouter } from "next/navigation";
 
-const ColorPalette = () => {
-
-  const router = useRouter();
-  const user = useSelector(state => state);
-  if(!user.user_id){
-    return(
-      <div className="wrapper">
-      <div className="section-title">
-      <p>Unauthorized access, please <a style={{textDecoration: 'underline'}} href='/signin'>login</a> first</p>
-      </div>
-       </div>
-          
-         
-    )
- }
+const ColorPalette = ({user}) => {
 
   const [api_key, setApiKey] = useState('');
   const GenerateKey = () => {

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 const ContactForm = () => {
-  const {user_email} = useSelector(state => state);
+  const user_email = useSelector(state => state.user_email);
   const router = useRouter();
 
   const [enquire, setEnquire] = useState({subject: '', message: '', status: false, submit: false});
@@ -23,6 +23,8 @@ const CreateEnquire = (e)=>{
       alert('Please enter Subject and Message');
         return;
     }
+
+    console.log(user_email);
 
     fetch('https://oneclickhuman.com/api_request/create_enquire', {
       mode:'cors', 

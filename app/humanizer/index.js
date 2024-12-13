@@ -9,7 +9,7 @@ import TextGenerator from "@/components/TextGenerator/TextGenerator";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const TextGeneratorPage = () => {
 

@@ -8,18 +8,18 @@ const accountInfo = {
     email_verification: false,
     time: null,
     status : null, 
-    quota : null, 
+    quota : 0, 
     current_date : null, 
-    credits_availbe : null, 
+    credits_availbe : 0, 
     subscrption_status : null, 
     subscription_id : null, 
     cancellation_status : null, 
-    onetime_credit : null, 
-    onetime_plan : null, 
-    monthly_plan : null, 
+    onetime_credit : 0, 
+    onetime_plan : 0, 
+    monthly_plan : 0, 
     subscription_amount : null, 
     onetime_amount : null, 
-    subscription_renewal_date : null, 
+    subscription_renewal_date : '0000-00-00', 
     is_lifetime_active : null, 
     lifetime_plan : null, 
     lifetime_refill_date : null, 
@@ -74,7 +74,10 @@ const accountReducer = (state = accountInfo, action) => {
       return {...state, onetime_credit: action.credits};  
 
     case 'quota-update-free':
-      return {...state, quota: action.credits};    
+      return {...state, quota: action.credits};
+      
+    case 'cancel-success':
+      return {...state, cancellation_status: 1 };  
 
     default: 
       return state;

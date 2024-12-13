@@ -1,7 +1,7 @@
 import React from "react";
 import ColorPalette from "./StyleSections/ColorPalette";
 
-const StyleGuide = () => {
+const StyleGuide = ({user}) => {
   return (
     <>
       <div className="rbt-style-guide-area rbt-utilize-area rainbow-section-gap-big">
@@ -12,7 +12,7 @@ const StyleGuide = () => {
                 id="colorPalette"
                 className="rbt-elements-area rbt-shadow-box mb--60"
               >
-                <ColorPalette />
+                <ColorPalette user={user}/>
               </div>
             </div>
           </div>

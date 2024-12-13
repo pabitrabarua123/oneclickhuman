@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import splitImg from "../../public/images/split/split-8.png";
+import splitImg from "../../public/images/split/ai.jpg";
 
 const Split = () => {
   return (

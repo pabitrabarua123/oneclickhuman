@@ -4,26 +4,10 @@ import ProfileBody from "./ProfileBody";
 //import AccountBody from "./AccountBody";
 //import UserNav from "../Common/UserNav";
 import ProgressBar from "../ProgressBar/ProgressBar";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
 
-const ProfileDetails = () => {
+const ProfileDetails = ({account_status, router, dispatch}) => {
 
-  const account_status = useSelector(state => state);
-  if(!account_status.user_id){
-     return(
-      <div className="rbt-main-content mr--0 mb--0">
-      <div className="rbt-daynamic-page-content center-width">
-        <div className="rbt-dashboard-content">
-          <br></br>
-           <p>Unauthorized access, please <a style={{textDecoration: 'underline'}} href='/signin'>login</a> first</p>
-          </div>
-          </div>
-          </div>
-     )
-  }
   const [is_renewal_date_crossed, setRenewalDateCrossed] = useState(0);
-  const router = useRouter();
 
   useEffect(() => {
     if(account_status.subscription_renewal_date !== ''){
@@ -44,6 +28,7 @@ const ProfileDetails = () => {
   }
 
   const [cancelationStatus, setCancelationStatus] = useState(null);
+  const [cancelSubscriptionPopup, setCancelSubscriptionPopup] = useState(false);
   async function cancelSubscription() {
     setCancelationStatus(null);
     try {
@@ -63,6 +48,7 @@ const ProfileDetails = () => {
           openCustomerPanel();
       }else{
         setCancelationStatus(data.status);
+        dispatch({type : 'cancel-success'});
       }
  } catch (error) {
      console.log(error);
@@ -119,14 +105,17 @@ const ProfileDetails = () => {
                      } */}
                    </div> 
                    <div className="next-payment-row">
-                    <button className="btn-default btn-small round" onClick={() => router.push('/pricing')}>Purchase Lifetime Word Balance</button>
-                    <button className="btn-default btn-small round" onClick={() => router.push('/pricing')}>Upgrade Monthly Plan</button>
+                    <button className="btn-default btn-small round mybtn" onClick={() => router.push('/pricing')}>Purchase Lifetime Words</button>
+                    <button className="btn-default btn-small round mybtn" onClick={() => router.push('/pricing')}>Upgrade Monthly Plan</button>
                    </div>
                       </div>
 
                     { account_status.subscrption_status === 1 && is_renewal_date_crossed === 0 && 
                       <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
-                        <p className="plan-heading">Monthly Plan</p>
+                        <p className="plan-heading">
+                          Monthly Plan<br/><br/>
+                          <span className="current-plan" style={{fontSize: '13px', fontWeight: '600'}}>Current Plan</span>
+                        </p>
                         <p className="features">
                          { account_status.monthly_plan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Words/month <br></br>
                          Access to All Modes <br></br>
@@ -139,7 +128,7 @@ const ProfileDetails = () => {
                          <span>{account_status.subscription_amount}</span>
                          <span>/month</span>
                         </p>
-                        <button className="position-change btn-default btn-small round">Upgrade Plan</button>
+                        <button className="position-change btn-default btn-small round" onClick={() => router.push('/pricing')}>Upgrade Plan</button>
                       </div>
                     }
 
@@ -157,19 +146,23 @@ const ProfileDetails = () => {
                         <span>{account_status.currency}</span>
                         <span>{account_status.onetime_amount}</span>
                        </p>
-                       <button className="position-change btn-default btn-small round">Upgrade Plan</button>
+                       <button className="position-change btn-default btn-small round" onClick={() => router.push('/pricing')}>Upgrade Plan</button>
                      </div>                   
                     }
 
                 </div>
                 <div className="col-lg-6">
-                  { account_status.subscrption_status === 1 && account_status.cancellation_status === 0 && 
+                  { account_status.subscrption_status === 1 && 
                      <div className="single-settings-box profile-details-box top-flashlight light-xl leftside overflow-hidden">
-                       <p className="plan-heading">Next Payment</p>
-                       <p style={{fontSize: '20px', fontWeight: '500'}}>{account_status.subscription_renewal_date.split('T')[0]}</p>
+                       <p className="plan-heading" style={{marginBottom: '10px'}}>Subscription Valid till</p>
+                       <p style={{fontSize: '20px', fontWeight: '500', marginBottom: '10px'}}>{account_status.subscription_renewal_date.split('T')[0]}</p>
+                       <p className="plan-heading" style={{marginBottom: '10px'}}>Subscription Status</p>
+                       <p style={{fontSize: '20px', fontWeight: '500'}}>{account_status.cancellation_status === 1 ? 'Cancelled' : 'Active'}</p>
                        <div className="btn-block">
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Update Payment Method</button>
-                        <button className="btn-default btn-small round" onClick={() => cancelSubscription()}>Cancel Subscription</button>
+                        { account_status.cancellation_status === 0 &&
+                          <button className="btn-default btn-small round" onClick={() => setCancelSubscriptionPopup(true)}>Cancel Subscription</button>
+                        }
                         <button className="btn-default btn-small round" onClick={() => openCustomerPanel()}>Invoice</button>
                        </div>
                        { cancelationStatus &&
@@ -183,6 +176,20 @@ const ProfileDetails = () => {
               <div className="chat-box-list">
                 <ProfileBody user={account_status} />
               </div>
+
+      { cancelSubscriptionPopup &&
+         <div id="delete-popup">
+            <div id="delete-popup-main">
+             <div id="delete-popup-inner">
+               <p>Are you sure you want to cancel the subscription?</p>
+               <div>
+                <button className="btn-default" onClick={cancelSubscription}>Yes</button> 
+                <button className="btn-default" onClick={() => setCancelSubscriptionPopup(false)} style={{marginLeft: '20px'}}>No</button>
+               </div>
+              </div>
+            </div>
+           </div>  
+      }
             </div>
           </div>
         </div>
