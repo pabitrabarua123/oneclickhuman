@@ -1,7 +1,7 @@
 import UtilizePage from "./index";
 
 export const metadata = {
-  title: "Documentation - Oneclickhuman",
+  title: "Documentation - OneClickHuman",
   description: "",
 };
 

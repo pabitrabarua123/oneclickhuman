@@ -10,7 +10,6 @@ import Separator from "../separator";
 import Split from "@/components/Split/Split";
 import PricingTwo from "@/components/Pricing/PricingTwo";
 import Accordion from "@/components/Accordion/Accordion";
-import Footer from "@/components/Footer/Footer";
 import Copyright from "@/components/Footer/Copyright";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";

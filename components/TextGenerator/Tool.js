@@ -14,7 +14,7 @@ import { useAppContext } from "@/context/Context";
 export const Tool = ({userData}) => {
 
   const dispatch = useDispatch();
-  const { toolTopbarMenu } = useAppContext();
+  const { toolTopbarMenu, ToolDocs } = useAppContext();
 
   const [has_subscription, setHaveSubscription] = useState(false);
   const [monthly_credits_exhausted, setMonthlyCreditsExhausted] = useState(false);
@@ -41,7 +41,7 @@ export const Tool = ({userData}) => {
         if(userData.credits_availbe > 1000 && userData.onetime_credit > 0){
              setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
              setQuotaToDecresed(2);
-        }else if(userData.credits_availbe > 1000){
+        }else if(userData.credits_availbe > 100){
           setQuota({...quota, number: userData.credits_availbe, plan: userData.monthly_plan, text: 'Monthly Balance', tooltip: 'Number of Articles you can Humanize every Month.'});
           //setLifeTimeExhausted(true);
           setQuotaToDecresed(2);
@@ -234,7 +234,13 @@ export const Tool = ({userData}) => {
         alert('Please accept the terms of service.');
         return;
     }
-  
+
+     setTimeout(() => {
+      document.getElementById('myclick').scrollIntoView({ behavior: "smooth" });
+     }, 3000);
+      
+      // link.click();
+
     let frequency = 0;
     let presence = 0;
     let top_p = 0;
@@ -651,8 +657,9 @@ export const Tool = ({userData}) => {
           <li><i className="feather-check"></i> High Readability Score</li>
          </ul>
        }
-        
-        <a id="documentation" href="/documentation"><i className="feather-file-text"></i> Docs</a>
+        { ToolDocs &&
+          <a id="documentation" href="/documentation"><i className="feather-file-text"></i> Docs</a>
+        }
  
         <span className="tooltip" id="tooltip-reset">{ disable_reset === true ? <i className="feather-repeat" style={{color: '#999', cursor: 'no-drop'}}></i> : <i className="feather-repeat" onClick={resetInputText}></i> }<span className="tooltiptext">Reset</span></span>
     </div>
@@ -742,7 +749,7 @@ export const Tool = ({userData}) => {
            <div id="right-bottom">
               <div style={{display: 'flex', width: '100%'}}>
                { mode.text !== 'Premium Mode' && TextBottomRight === true ?
-                 <span id="TextBottomRight">Finding the tone too informal? Try <span onClick={() => changeMode('Premium Mode')}>Premium Mode</span></span>
+                 <span id="TextBottomRight">Finding the tone too informal? Try <span style={{cursor: 'pointer'}} onClick={() => changeMode('Premium Mode')}>Premium Mode</span></span>
                  : ''
                }
                 <span className="tooltip" onClick={copyContent}><i className="feather-copy"></i><span className="tooltiptext">Copy</span></span>
@@ -757,6 +764,7 @@ export const Tool = ({userData}) => {
    { timerPopup.status &&
      <Timer currentDate={timerPopup.current_date} router={router} showTimerPopup={showTimerPopup}/>
    }
+   <button id="myclick" style={{visibility: 'hidden', height: '0', position: 'absolute', bottom: '0'}}>myclick</button>
    </>
    )
 }

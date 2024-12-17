@@ -4,15 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import avatar from "../../public/images/team/team-01.jpg";
 import light from "../../public/images/light/switch/sun-01.svg";
 import dark from "../../public/images/light/switch/vector.svg";
 
-import UserMenuItems from "../Header/HeaderProps/UserMenuItems";
-
 import HeaderData from "../../data/header.json";
 import { useAppContext } from "@/context/Context";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const LeftpanelDashboard = () => {
@@ -135,15 +131,8 @@ const LeftpanelDashboard = () => {
               <span className="text">Light</span>
             </button>
           </div>
-          <p className="subscription-copyright copyright-text text-center b4  small-text">
-            © 2024
-            <Link
-              className="ps-2"
-              href="https://themeforest.net/user/rainbow-themes/portfolio"
-            >
-              Rainbow Themes
-            </Link>
-            .
+          <p className="subscription-copyright copyright-text text-center b4 small-text">
+            © 2024 oneclickhuman.com
           </p>
         </div>
       </div>

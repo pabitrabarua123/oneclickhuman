@@ -2,7 +2,7 @@ import BackToTop from "../backToTop";
 import PricingPage from "./index";
 
 export const metadata = {
-  title: "Pricing | Oneclickhuman",
+  title: "Pricing | OneClickHuman",
   description: "",
 };
 

@@ -10,6 +10,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+//import HeaderTop from "@/components/Header/HeaderTop/Header-Top";
 
 const TextGeneratorPage = () => {
 

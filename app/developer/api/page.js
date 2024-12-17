@@ -1,7 +1,7 @@
 import StyleGuidePage from "./index";
 
 export const metadata = {
-  title: "API || Oneclickhuman",
+  title: "API || OneClickHuman",
   description: "",
 };
 

@@ -1,7 +1,7 @@
 import SignInPage from "./index";
 
 export const metadata = {
-  title: "SingIn || Oneclickhuman",
+  title: "SingIn || OneClickHuman",
   description: "",
 };
 

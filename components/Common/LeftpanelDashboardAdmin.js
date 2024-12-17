@@ -4,13 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import avatar from "../../public/images/team/team-01.jpg";
 import light from "../../public/images/light/switch/sun-01.svg";
 import dark from "../../public/images/light/switch/vector.svg";
 
-import UserMenuItems from "../Header/HeaderProps/UserMenuItems";
-
-import HeaderData from "../../data/header.json";
 import { useAppContext } from "@/context/Context";
 
 const LeftpanelDashboardAdmin = () => {

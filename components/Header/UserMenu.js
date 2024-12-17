@@ -1,7 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-
-import avatar from "../../public/images/team/team-01.jpg";
 import UserMenuItems from "./HeaderProps/UserMenuItems";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";

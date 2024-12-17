@@ -9,7 +9,6 @@ import logoLight from "../../public/images/logo/logo.png";
 import logoDark from "../../public/images/logo/logo-dark.png";
 
 import Nav from "./Nav";
-import SmallNav from "./SmallNav";
 
 const PopupMobileMenu = () => {
   const { activeMobileMenu, setActiveMobileMenu } = useAppContext();
@@ -67,7 +66,7 @@ const PopupMobileMenu = () => {
 
             <div className="rbt-sm-separator"></div>
             <div className="rbt-default-sidebar-wrapper">
-              <SmallNav />
+              {/* <SmallNav /> */}
             </div>
           </div>
         </div>

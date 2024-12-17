@@ -1,7 +1,7 @@
 import SuccessPage from "./index";
 
 export const metadata = {
-  title: "Payment Success - Oneclickhuman",
+  title: "Payment Success - OneClickHuman",
   description: "",
 };
 

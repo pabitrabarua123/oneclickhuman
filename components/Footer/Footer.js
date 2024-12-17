@@ -1,11 +1,4 @@
 import Separator from "@/app/separator";
-
-import Image from "next/image";
-import Link from "next/link";
-
-import logo from "../../public/images/logo/logo.png";
-import logoDark from "../../public/images/logo/logo-dark.png";
-
 import FooterData from "../../data/footer.json";
 import SingleFooter from "./FooterProps/SingleFooter";
 import { useAppContext } from "@/context/Context";

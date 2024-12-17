@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "../store/provider";
 import { ToastContainer } from 'react-toastify';
@@ -20,10 +20,12 @@ import "react-tooltip/dist/react-tooltip.css";
 
 import "../public/scss/style.scss";
 
+
+
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
-  }, []);
+  // useEffect(() => {
+  //   require("bootstrap/dist/js/bootstrap.bundle.min.js");
+  // }, []);
   return (
     <html lang="en">
       <body className="" suppressHydrationWarning={true}>

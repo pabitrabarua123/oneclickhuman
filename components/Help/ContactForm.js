@@ -20,8 +20,9 @@ const CreateEnquire = (e)=>{
     setEnquire({...enquire, status: false, submit: true});
 
     if(enquire.subject === '' && enquire.message === ''){
-      alert('Please enter Subject and Message');
-        return;
+       alert('Please enter Subject and Message');
+       setEnquire({...enquire, submit: false});
+       return;
     }
 
     console.log(user_email);
@@ -44,7 +45,6 @@ const CreateEnquire = (e)=>{
               setEnquire({...enquire, status: true, submit: false});
          }
     });
-
 }
 
   return (
@@ -79,6 +79,7 @@ const CreateEnquire = (e)=>{
             type="submit"
             id="submit"
             className="btn-default btn-large rainbow-btn"
+            disabled={enquire.submit}
           >
             <span>Submit Now</span>
           </button>

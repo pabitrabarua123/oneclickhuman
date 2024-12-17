@@ -55,6 +55,15 @@ const PricingPage = () => {
     <>
       <main className="page-wrapper">
         <Context>
+            { (userData.monthly_plan === 0 && userData.onetime_plan === 0) || userData.user_id === null ?
+              <HeaderTop type="not-purchased"/>
+              : ''
+            }
+
+            { userData.subscrption_status === 1 && userData.credits_availbe === 0 ?
+              <HeaderTop type="purchased"/>
+              : ''
+            }
           <Header
             headerTransparent="header-not-transparent"
             headerSticky="header-sticky"
