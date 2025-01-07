@@ -24,7 +24,7 @@ const ProfileDetailsPage = () => {
   const dispatch = useDispatch();
 
   const fetchUserDetails = async () => {
-    console.log('request sending....');
+    //console.log('request sending....');
     dispatch({type: 'loading-user'}); 
     const session_details = await getSession();   
     try {
@@ -41,7 +41,7 @@ const ProfileDetailsPage = () => {
   
          let data = await res.json();
   
-         console.log(data);
+        // console.log(data);
          data.user_id = session_details.user.user_id;
          data.user_email = session_details.user.user_email;
          data.time = session_details.user.time;

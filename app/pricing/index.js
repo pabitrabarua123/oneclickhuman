@@ -1,7 +1,7 @@
 "use client";
 
 import Context from "@/context/Context";
-import HeaderTop from "@/components/Header/HeaderTop/Header-Top";
+//import HeaderTop from "@/components/Header/HeaderTop/Header-Top";
 import Header from "@/components/Header/Header";
 import PopupMobileMenu from "@/components/Header/PopupMobileMenu";
 import Footer from "@/components/Footer/Footer";
@@ -55,7 +55,7 @@ const PricingPage = () => {
     <>
       <main className="page-wrapper">
         <Context>
-            { (userData.monthly_plan === 0 && userData.onetime_plan === 0) || userData.user_id === null ?
+            {/* { (userData.monthly_plan === 0 && userData.onetime_plan === 0) || userData.user_id === null ?
               <HeaderTop type="not-purchased"/>
               : ''
             }
@@ -63,7 +63,7 @@ const PricingPage = () => {
             { userData.subscrption_status === 1 && userData.credits_availbe === 0 ?
               <HeaderTop type="purchased"/>
               : ''
-            }
+            } */}
           <Header
             headerTransparent="header-not-transparent"
             headerSticky="header-sticky"

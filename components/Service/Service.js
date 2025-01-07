@@ -6,6 +6,8 @@ import sal from "sal.js";
 
 import ServiceItem from "./ServiceItem";
 import ServiceData from "../../data/home.json";
+import Image from "next/image";
+import Humanize from "../../public/images/humanize.gif";
 
 const Service = () => {
   useEffect(() => {
@@ -36,7 +38,7 @@ const Service = () => {
                 data-sal-delay="100"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">GET IN TOUCH FOR FREE</span>
+                  <span className="theme-gradient">GET STARTED FOR FREE</span>
                 </h4>
                 <h2 className="title w-600 mb--20">
                   Humanize your article in under 30 Seconds
@@ -44,10 +46,11 @@ const Service = () => {
                 <p className="description b1">
                   Reasonable pricing – Insane Quality
                 </p>
+                <Image src={Humanize}/>
               </div>
             </div>
           </div>
-
+          <br/>
           <div className="row row--15 service-wrapper">
             <ServiceItem ServiceData={ServiceData} />
           </div>

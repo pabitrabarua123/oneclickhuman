@@ -72,11 +72,12 @@ const SinglePrice = ({ data, incresePrice, parentClass, monthlyPlan, subscrption
                     <input type="hidden" name="email_address" value={session? session.user.user_email : ''} />
                     <input type="hidden" name="subscription" value={data.price_id} />
                     <input type="hidden" name="promocode" value="PAB50BA" />
-                    { monthlyPlan === null &&
-                      <button className="btn-default btn-border" type="button" style={{display: 'inline-block'}} onClick={() => router.push('/signin')}>Purchase</button>
+                    { !session &&
+                      <button className="btn-default btn-border" type="button" style={{display: 'inline-block'}} onClick={() => router.push('/signup')}>Purchase</button>
                     }
-                    { monthlyPlan === 0 &&
+                    { monthlyPlan === 0 && session ?
                       <button className="btn-default btn-border" style={{display: 'inline-block'}} type="submit">Purchase</button>
+                    : ''
                     }
                     { monthlyPlan > 0 &&
                     <>

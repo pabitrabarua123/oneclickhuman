@@ -39,7 +39,7 @@ const PricingTwo = ({
        method: 'GET'
      }).then(res => res.json())
        .then((json) => {
-         console.log(json.products);
+         //console.log(json.products);
         let items = [];
         let items_onetime = [];
          json.products.map((product) => {
@@ -58,8 +58,8 @@ const PricingTwo = ({
  }, [1]); 
 
  useEffect(() => {
-   console.log(products);
-   console.log(products_onetime);
+  // console.log(products);
+  // console.log(products_onetime);
  }, [products, products_onetime])
 
   return (

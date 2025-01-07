@@ -67436,6 +67436,10 @@ div#bottom-left {
   width: 100%;
 }
 
+body.active-light-mode div#bottom-left {
+  background-color: unset;
+}
+
 p#small-text-left-bottom {
   font-size: 11px;
   margin-bottom: 0;
@@ -67508,7 +67512,7 @@ div#content-generator div#result {
   height: calc(100vh - 240px);
   overflow-y: scroll;
   padding: 0 20px 0 25px;
-  width: calc(100% + 20px);
+  width: calc(100% - 6px);
 }
 
 span#TextBottomRight {
@@ -67534,7 +67538,7 @@ div#result {
   height: calc(100vh - 270px);
   overflow-y: scroll;
   padding: 0 20px 0 25px;
-  width: calc(100% + 20px);
+  width: calc(100% - 6px);
 }
 
 i.feather-copy {
@@ -67764,6 +67768,7 @@ button.position-change {
 div#tool {
   border: 1px solid #555279;
   border-radius: 4px;
+  overflow: hidden;
 }
 
 body.active-light-mode div#top-bar,
@@ -67859,19 +67864,6 @@ div#popup p {
   background: linear-gradient(154deg, #dd00ac 8.66%, #7130c3 53.03%, #410093 96.34%, rgba(255, 0, 238, 0.26) 191.41%, #2196F3 191.43%);
 }
 
-.admin-card p, body.active-light-mode p {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 10px !important;
-}
-
-.admin-card h3, body.active-light-mode h3 {
-  color: #fff;
-  font-size: 35px;
-  font-weight: 800;
-}
-
 div#userModal {
   position: fixed;
   top: 0;
@@ -67919,6 +67911,10 @@ div#content-generator div#tool select {
   background: transparent;
 }
 
+body.active-light-mode div#content-generator div#tool select {
+  border: 2px solid rgba(112, 100, 233, 0.3019607843);
+}
+
 div#content-generator .form-group label {
   margin-bottom: 7px;
 }
@@ -67940,24 +67936,86 @@ div#content-generator div#right-bottom .tooltip .tooltiptext {
 
 div#content-generator div#result h1 {
   font-size: 25px;
+  margin-top: 10px;
 }
 
 div#content-generator div#result h2 {
   font-size: 23px;
+  margin-top: 25px;
 }
 
 div#content-generator div#result h3 {
   font-size: 20px;
+  margin-top: 25px;
 }
 
 div#content-generator div#result h4 {
   font-size: 18px;
+  margin-top: 25px;
 }
 
 .mybtn {
   font-size: 13px !important;
 }
 
+div#content-generator div#result, div#content-generator div#result p {
+  font-size: 14px;
+}
+
+/* Customize the scrollbar track */
+div#result::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+div#result::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Background color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+/* Customize the scrollbar thumb */
+div#result::-webkit-scrollbar-thumb {
+  background: #2a2d54; /* Thumb color (scroll handle) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 3px solid #e0e0e0; /* Optional: Border around the thumb to match the track */
+}
+
+div#result::-webkit-scrollbar-thumb:hover {
+  background: #2a2d54; /* Darker color when hovering over the thumb */
+}
+
+/* Optional: For Firefox */
+div#result {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #2a2d54 #0f1021; /* Thumb color | Track color */
+}
+
+body.active-light-mode div#result {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #607D8B #f5f5f5; /* Thumb color | Track color */
+}
+
+/* Customize the scrollbar thumb */
+body.active-light-mode div#result::-webkit-scrollbar-thumb {
+  background: #607D8B; /* Thumb color (scroll handle) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 3px solid #e0e0e0; /* Optional: Border around the thumb to match the track */
+}
+
+body.active-light-mode div#result::-webkit-scrollbar-thumb:hover {
+  background: #607D8B; /* Darker color when hovering over the thumb */
+}
+
+@media only screen and (max-width: 600px) {
+  div#content-generator div#right-bottom {
+    width: 100%;
+  }
+  div#content-generator div#right-bottom div {
+    margin-top: unset !important;
+  }
+  div#content-generator button#paraphrase {
+    width: 100%;
+  }
+}
 .rbt-modal-box {
   transition: all 0.3s ease;
 }

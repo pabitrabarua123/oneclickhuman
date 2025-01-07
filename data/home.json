@@ -3,37 +3,37 @@
     {
       "title": "Maintain Original Formatting",
       "desc": "Preserve headings, bullet points, links, and more.",
-      "icon": "activity",
+      "icon": "edit",
       "delay": 100
     },
     {
       "title": "Perfect Grammar",
       "desc": "Ensure your content reads naturally and professionally.",
-      "icon": "cast",
+      "icon": "check-square",
       "delay": 100
     },
     {
       "title": "Beat AI Detectors",
       "desc": "Bypass detection from leading tools like ZeroGPT.",
-      "icon": "map",
+      "icon": "cpu",
       "delay": 200
     },
     {
       "title": "Multilingual Support",
       "desc": "Humanize your content in 10+ different languages.",
-      "icon": "loader",
+      "icon": "globe",
       "delay": 100
     },
     {
-      "title": "Bulk Conversion",
+      "title": "Bulk Conversion (coming soon)",
       "desc": "Transform entire blogs or multiple articles at once.",
-      "icon": "speaker",
+      "icon": "sliders",
       "delay": 100
     },
     {
-      "title": "WordPress Plugin",
-      "desc": "Seamlessly integrate with WordPress for instant conversions.",
-      "icon": "terminal",
+      "title": "Rank Better on Google",
+      "desc": "The tools output is proven to rank higher and is better for SEO.",
+      "icon": "trending-up",
       "delay": 200
     }
   ],

@@ -13,15 +13,24 @@ import Accordion from "@/components/Accordion/Accordion";
 import Copyright from "@/components/Footer/Copyright";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
-  
+
+  const router = useRouter();
+  const check_session = useSession();
+  if(check_session.status === 'authenticated'){
+    //console.log(check_session);
+    router.push('/humanizer');
+  }else{
+    //console.log('Signed out');
+  }
   const userData = useSelector(state => state);
   const dispatch = useDispatch();
 
   const fetchUserDetails = async () => {
-    console.log('request sending....');
+    //console.log('request sending....');
     dispatch({type: 'loading-user'}); 
     const session_details = await getSession();   
     try {
@@ -38,7 +47,7 @@ const HomePage = () => {
   
          let data = await res.json();
   
-         console.log(data);
+         //console.log(data);
          data.user_id = session_details.user.user_id;
          data.user_email = session_details.user.user_email;
          data.time = session_details.user.time;

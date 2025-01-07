@@ -115,6 +115,8 @@ export const Tool = ({userData}) => {
    const [contentType, setContentType] = useState('Blog Post');
    const [contentLength, setContentLength] = useState('less than 50 words');
    const [request_process, setRequestProcess] = useState(0);
+   const [request_process_1, setRequestProcessOne] = useState(0);
+   const [request_process_2, setRequestProcessTwo] = useState(0);
    const [request, setRequest] = useState(0);
    const [paraphrasedText, setParaphrasedText] = useState('');
    let msgCnt = 0;
@@ -126,13 +128,16 @@ export const Tool = ({userData}) => {
     setWordCount(countWord);
   }, [textInput]);
 
-   function paraphrase2() {
+  const [GenerationComplete, setGenerationComplete] = useState(false);
+  function paraphrase2(type) {
 //console.log(textInput);
     //setUnderConstruction(true);
     //return;
   
       //setRequest(2);
       //return;
+
+      setGenerationComplete(false);
   
     let outputRes = '';
     
@@ -154,6 +159,21 @@ export const Tool = ({userData}) => {
            return;
        }
     }
+
+    var completion_url = ''; 
+    if(type === 'content'){
+        completion_url = 'https://oneclickhuman.com/api_request/completion_content_generator/';
+    }
+    if(type === 'shorten'){
+        completion_url = 'https://oneclickhuman.com/api_request/completion_content_generator_shorten/';
+    }
+    if(type === 'rewrite'){
+        completion_url = 'https://oneclickhuman.com/api_request/completion_content_generator_rewrite/';
+    }
+
+    setTimeout(() => {
+      document.getElementById('myclick').scrollIntoView({ behavior: "smooth" });
+     }, 3000);
   
   fetch('https://oneclickhuman.com/api_request/checkquota', {
          mode:'cors', 
@@ -177,7 +197,16 @@ export const Tool = ({userData}) => {
                 }
   
                    setRequest(2);
-                   setRequestProcess(1);
+                   
+                   if(type === 'content'){
+                       setRequestProcess(1);
+                   }
+                   if(type === 'shorten'){
+                       setRequestProcessOne(1);
+                   }
+                   if(type === 'rewrite'){
+                       setRequestProcessTwo(1);
+                   }
                    document.getElementById("paraphrase").disabled = true;
     
               fetch('https://oneclickhuman.com/api_request/prompt_content_generator', {
@@ -185,14 +214,14 @@ export const Tool = ({userData}) => {
                   headers: {
                     'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify({is_live_mode: true, paid_user: paid_user, prompt: textInput, contentType: contentType, contentLength: contentLength}),
+                  body: JSON.stringify({is_live_mode: true, paid_user: paid_user, prompt: paraphrasedText, contentType: contentType, contentLength: contentLength}),
               })
               .then(response => response.text())
               .then(promptId => {
                   if (source) {
                       source.close();
                   }
-                  source = new EventSource("https://oneclickhuman.com/api_request/completion_content_generator/" + promptId);
+                  source = new EventSource(completion_url + promptId);
                   source.onmessage = function(event) {
                   var dt = JSON.parse(event.data);
   
@@ -201,6 +230,7 @@ export const Tool = ({userData}) => {
            source.close();
           
            setParaphrasedText(outputRes);
+           setGenerationComplete(true);
            let word_output_count = getCount(outputRes);
            console.log("Word count is: " + word_output_count);
 
@@ -269,7 +299,16 @@ export const Tool = ({userData}) => {
             });
 
            document.getElementById("paraphrase").disabled = false; 
-           setRequestProcess(0);
+
+           if(type === 'content'){
+            setRequestProcess(0);
+           }
+           if(type === 'shorten'){
+             setRequestProcessOne(0);
+           }
+           if(type === 'rewrite'){
+            setRequestProcessTwo(0);
+           }
   
           /* fetch('https://oneclickhuman.com/api_request/add_record', {
                   mode:'cors', 
@@ -449,12 +488,11 @@ export const Tool = ({userData}) => {
   const copyContent = () =>{
     selectText('result');
   }
-  
 
    return(
     <>
     <div id='tool'>
-    <div className="row justify-content-center">
+     <div className="row justify-content-center">
       <div className="col-lg-6" id="left-column">
         <div id="InputWrapper">
          <form class="contact-form-1 rainbow-dynamic-form" id="contact-form" style={{padding: '0 20px 0 25px'}}>
@@ -531,7 +569,7 @@ export const Tool = ({userData}) => {
                  </span>
                </span> */}
              </span>
-             <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Generate Article'}</span></button>
+             <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={() => paraphrase2('content')}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Generate Article'}</span></button>
         </div>
       </div>
 
@@ -542,8 +580,14 @@ export const Tool = ({userData}) => {
              <div id="result" contentEditable={true} suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: paraphrasedText}} />
            </div>
            <div id="right-bottom">
-              <div style={{display: 'flex', width: '100%', marginTop: '20px'}}>
+              <div style={{display: 'flex', width: '100%', marginTop: '20px', gap: '20px', paddingLeft: '15px'}}>
                 <span className="tooltip" onClick={copyContent}><i className="feather-copy"></i><span className="tooltiptext">Copy</span></span>
+                { GenerationComplete &&
+                  <>
+                   <button onClick={() => paraphrase2('shorten')} className="btn-default btn-small round" style={{height: '33px', lineHeight: '34px', padding: '0 20px', fontSize: '13px', width: '100px'}}>{ request_process_1 === 1 ? <span class="dot-pulse"></span> : 'Shorten'}</button>
+                   <button onClick={() => paraphrase2('rewrite')} className="btn-default btn-small round" style={{height: '33px', lineHeight: '34px', padding: '0 20px', fontSize: '13px', width: '100px'}}>{ request_process_2 === 1 ? <span class="dot-pulse"></span> : 'Rewrite'}</button>
+                  </>
+                }
               </div>
              </div>
              </>
@@ -555,6 +599,7 @@ export const Tool = ({userData}) => {
    { timerPopup.status &&
      <Timer currentDate={timerPopup.current_date} router={router} showTimerPopup={showTimerPopup}/>
    }
+   <button id="myclick" style={{visibility: 'hidden', height: '0', position: 'absolute', bottom: '0'}}>myclick</button>
    </>
    )
 }

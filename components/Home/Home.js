@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +9,7 @@ import "venobox/dist/venobox.min.css";
 import separator from "../../public/images/separator/separator-top.svg";
 import separatorLight from "../../public/images/light/separator/separator-top.svg";
 import { useAppContext } from "@/context/Context";
+import { getSession } from "next-auth/react";
 
 const Home = () => {
   const { isLightTheme } = useAppContext();
@@ -20,6 +21,19 @@ const Home = () => {
       });
     });
   }, []);
+
+  const [user_signedIn, setuserSignedIn] = useState(false);
+  useEffect( () => {
+  async function testSession() {
+   let session = await getSession(); 
+    if(session){
+      setuserSignedIn(true);
+    }
+  }
+  
+  testSession();
+}, [1]);
+
   return (
     <>
       <div
@@ -40,6 +54,7 @@ const Home = () => {
                 It does not just beat AI detectors, it improves your content quality
                 </p>
                 <div className="button-group">
+                  { user_signedIn ?
                   <Link
                     className="btn-default bg-light-gradient btn-large"
                     href="/humanizer"
@@ -47,6 +62,16 @@ const Home = () => {
                     <div className="has-bg-light"></div>
                     <span>Start Humanizing for Free</span>
                   </Link>
+                    :
+                  <Link
+                    className="btn-default bg-light-gradient btn-large"
+                    href="/signin"
+                  >
+                    <div className="has-bg-light"></div>
+                    <span>Start Humanizing for Free</span>
+                  </Link>
+                  }
+
                 </div>
                 <p className="color-gray mt--5">💳 No credit card required!</p>
               </div>

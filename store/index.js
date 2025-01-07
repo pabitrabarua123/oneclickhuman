@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 const accountInfo = {
     loading: false,
     user_id: null,
+    user_created: '0000-00-00',
     user_email: null,
     email_verification: false,
     time: null,
@@ -40,6 +41,7 @@ const accountReducer = (state = accountInfo, action) => {
     return {...state, 
         loading: false, 
         user_id: action.payload.user_id,
+        user_created: action.payload.user_created,
         user_email: action.payload.user_email,
         email_verification: action.payload.email_verification,
         time: action.payload.time,

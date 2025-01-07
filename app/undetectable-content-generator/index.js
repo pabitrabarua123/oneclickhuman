@@ -8,7 +8,7 @@ import ContentGenerator from "@/components/UndetectableContentGenerator/ContentG
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 
 const UndetectableContentGenerator = () => {
 
@@ -26,7 +26,7 @@ const UndetectableContentGenerator = () => {
   const router = useRouter(); 
 
   const fetchUserDetails = async () => {
-    console.log('request sending....');
+    //console.log('request sending....');
     dispatch({type: 'loading-user'}); 
     const session_details = await getSession();   
     try {
@@ -43,7 +43,7 @@ const UndetectableContentGenerator = () => {
   
          let data = await res.json();
   
-         console.log(data);
+         //console.log(data);
          data.user_id = session_details.user.user_id;
          data.user_email = session_details.user.user_email;
          data.time = session_details.user.time;
@@ -59,6 +59,15 @@ const UndetectableContentGenerator = () => {
          fetchUserDetails();
     }
   }, [1]);
+
+  const [days_difference, setDaysDifference] = useState(-1);
+  useEffect(() => {
+    const today = new Date();
+    const targetDate = new Date(user_data.user_created);
+    const timeDifference = today - targetDate;
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    setDaysDifference(daysDifference);
+  }, [user_data]);
   
   return (
     <>
@@ -74,7 +83,15 @@ const UndetectableContentGenerator = () => {
                 <div className="rbt-dashboard-content">
                   <div className="content-page">
                     { !user_data.loading &&
-                      <ContentGenerator userData={user_data}/>
+                    <>
+                      { days_difference > 14 && user_data.subscrption_status === 0 && user_data.onetime_plan === 0 ?
+                        <div style={{marginTop: '100px'}}>
+                          <h3>Your trial is over!</h3>
+                          <p>Please check our attractive subscription and lifetime plans. <a style={{color: '#7064e9'}} href='/pricing'>See Pricing</a></p>
+                        </div> :
+                        <ContentGenerator userData={user_data}/>
+                      }
+                    </>
                     }
                   </div>
                 </div>

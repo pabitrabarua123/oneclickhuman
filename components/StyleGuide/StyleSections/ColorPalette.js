@@ -23,7 +23,7 @@ const ColorPalette = ({user}) => {
 }
 
 useEffect(() => {
-  console.log(user.user_id);
+ // console.log(user.user_id);
    if (user.user_id) {
          fetch('https://oneclickhuman.com/api_request/get_api_key', {
           mode:'cors', 

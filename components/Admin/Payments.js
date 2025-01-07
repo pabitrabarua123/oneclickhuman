@@ -29,7 +29,7 @@ const Payments = ({userData}) => {
     },
     {
       name: 'Amount Paid',
-      selector: row => row.amount_paid + 'USD',
+      selector: row => row.amount_paid + '$',
       sortable: true,
     },
     {
@@ -191,7 +191,7 @@ useEffect(() => {
                       <div className="col-md-8">
                         <h2>Payment Details</h2>
                         <h4 style={{width: '60%', fontSize: '16px'}}>
-                          Total Payments: { payment_details.onetime + payment_details.new_subscription + payment_details.renewals }USD<br></br><small style={{fontWeight: '500'}}>OneTime - {payment_details.onetime}USD | New Subscription - {payment_details.new_subscription}USD | Renewals - {payment_details.renewals}USD</small>
+                          Total Payments: { payment_details.onetime + payment_details.new_subscription + payment_details.renewals }$<br></br><small style={{fontWeight: '500'}}>OneTime - {payment_details.onetime}$ | New Subscription - {payment_details.new_subscription}$ | Renewals - {payment_details.renewals}$</small>
                         </h4>
                       </div>
                       <div className="col-md-4">
@@ -221,7 +221,7 @@ useEffect(() => {
                        marginTop: '48px', 
                        padding: '40px 20px 20px 0px'
                    }}>
-                   <h4 style={{color: '#000', marginLeft: '21px', marginBottom: '27px'}}>Monthy Payments (USD)</h4>
+                   <h4 style={{color: '#000', marginLeft: '21px', marginBottom: '27px'}}>Monthy Payments ($)</h4>
                   <ResponsiveContainer width={850} height={300}>
                      <LineChart data={PaymentChart} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                       <Line type="monotone" dataKey="payment" stroke="#8884d8" />

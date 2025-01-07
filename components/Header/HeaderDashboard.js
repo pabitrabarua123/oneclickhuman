@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useAppContext } from "@/context/Context";
 
 import logo from "../../public/images/logo/logo.png";
-import logoDark from "../../public/images/logo/logo-dark.png";
+import logoLight from "../../public/images/logo/logo-light.png";
 import avatar from "../../public/images/team/team-01.jpg";
 
 import Nav from "./Nav";
@@ -20,6 +20,7 @@ const HeaderDashboard = ({ display }) => {
     setRightBar,
     activeMobileMenu,
     setActiveMobileMenu,
+    isLightTheme
   } = useAppContext();
   return (
     <>
@@ -41,18 +42,10 @@ const HeaderDashboard = ({ display }) => {
                 <div className="logo">
                   <Link href="/">
                     <Image
-                      className="logo-light"
-                      src={logo}
-                      width={201}
-                      height={35}
-                      alt="Corporate Logo"
-                    />
-                    <Image
-                      className="logo-dark"
-                      src={logoDark}
-                      width={201}
-                      height={35}
-                      alt="Corporate Logo"
+                      className={isLightTheme ? "logo-light" : "logo-dark"}
+                      src={isLightTheme ? logo : logoLight}
+                      alt="Logo"
+                      width="240"
                     />
                   </Link>
                 </div>

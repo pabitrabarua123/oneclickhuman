@@ -93,12 +93,12 @@ const LeftpanelDashboardAdmin = () => {
             </button>
           </div>
           <p className="subscription-copyright copyright-text text-center b4  small-text">
-            © 2024
+            © 2025
             <Link
               className="ps-2"
-              href="https://themeforest.net/user/rainbow-themes/portfolio"
+              href="https://oneclickhuman.com"
             >
-              Rainbow Themes
+              oneclickhuman.com
             </Link>
             .
           </p>

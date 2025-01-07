@@ -33,8 +33,8 @@ const LeftpanelDashboard = () => {
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     <li>
                       <Link
-                        className={isActive("/pricing") ? "active" : ""}
-                        href="/pricing"
+                        className={isActive("/manage-subscription") ? "active" : ""}
+                        href="/manage-subscription"
                       >
                         <i className="feather-briefcase"></i>
                         <span>Manage Subscription</span>

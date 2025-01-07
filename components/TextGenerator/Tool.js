@@ -733,7 +733,7 @@ export const Tool = ({userData}) => {
                    onChange={handleTosChange}
                    checked={TosChecked}
                  />
-                 <span>I AGREE TO THE <a href="/tos" target="_blank">TOS</a> (NO ACADEMIC MISUSE)</span>
+                 <span>I AGREE TO THE <a href="/tos" target="_blank">T&C</a> (NO ACADEMIC MISUSE)</span>
                </span>
              </span>
              <button id="paraphrase" type="button" className="btn-default btn-small round" onClick={paraphrase2}><i></i><span>{ request_process === 1 ? <span class="dot-pulse"></span> : 'Humanize'}</span></button>

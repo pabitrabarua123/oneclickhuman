@@ -13,8 +13,19 @@ import sal from "sal.js";
 import boxedLogo from "../../public/images/logo/boxed-logo.png";
 
 const SignIn = () => {
+
+  
   const { isLightTheme } = useAppContext();
-  useEffect(() => {
+  useEffect( () => {
+async function testSession() {
+  let session1 = await getSession();
+  if(session1){
+    router.push("/humanizer");
+  }  
+}
+
+testSession();
+
     sal();
 
     const cards = document.querySelectorAll(".bg-flashlight");

@@ -100,6 +100,7 @@ const SignUp = () => {
             <div className="separator-animated animated-true"></div>
             <div className="signup-box-bottom">
               <div className="signup-box-content">
+                <h4>Try us Free for 14 Days</h4>
                 <h4 className="title">Create Account</h4>
                 <div className="social-btn-grp">
                   {/* <Link className="btn-default btn-border" href="#">

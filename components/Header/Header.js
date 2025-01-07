@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useAppContext } from "@/context/Context";
 
 import logo from "../../public/images/logo/logo.png";
+import logoLight from "../../public/images/logo/logo-light.png";
 
 //import ToolsData from "../../data/header.json";
 
@@ -65,7 +66,7 @@ useEffect(() => {
                 <Link href="/">
                   <Image
                     className={isLightTheme ? "logo-light" : "logo-dark"}
-                    src={isLightTheme ? logo : logo}
+                    src={isLightTheme ? logo : logoLight}
                     alt="Logo"
                     width="240"
                   />
@@ -82,7 +83,7 @@ useEffect(() => {
                   { getStartedBtnText && 
                     <Link
                       className={`btn-default ${btnClass}`}
-                      href="/humanizer"
+                      href="/signin"
                     >
                     Humanizer  
                     </Link> 

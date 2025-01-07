@@ -52,20 +52,20 @@ const Home = ({userData}) => {
                  <div className="row">
                    <div className="col-md-4">
                     <div className="admin-card">
-                      <p>Active Users</p>
-                      <h3>{website_status.active_users}</h3>
+                      <p style={{color: '#ffffff'}}>Active Users</p>
+                      <h3 style={{color: '#ffffff'}}>{website_status.active_users}</h3>
                     </div>
                    </div>
                    <div className="col-md-4">
                    <div className="admin-card">
-                      <p>Active Subscribers</p>
-                      <h3>{website_status.active_subscribers}</h3>
+                      <p style={{color: '#ffffff'}}>Active Subscribers</p>
+                      <h3 style={{color: '#ffffff'}}>{website_status.active_subscribers}</h3>
                     </div>
                    </div>
                    <div className="col-md-4">
                    <div className="admin-card">
-                      <p>Total Earnings</p>
-                      <h3>{website_status.total_earnings}USD</h3>
+                      <p style={{color: '#ffffff'}}>Total Earnings</p>
+                      <h3 style={{color: '#ffffff'}}>{website_status.total_earnings}$</h3>
                     </div>
                    </div>
                  </div>
